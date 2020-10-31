@@ -1,24 +1,21 @@
 # terminal-rpg-2
 
-## Project setup
+## セットアップ
+
+package.json に書かれているライブラリを一括で読み込む
+
 ```
-yarn install
+npm install
 ```
 
-### Compiles and hot-reloads for development
+## ライブラリのインストール
+
+```
+npm install ライブラリー名
+```
+
+### ローカルでテストサーバーを立ち上げる
+
 ```
 yarn serve
 ```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
