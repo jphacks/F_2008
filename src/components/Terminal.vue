@@ -1,5 +1,6 @@
 
 
+
 <template>
   <h1>Terminal</h1>
   <p>bossHP:{{num}}</p>
