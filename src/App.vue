@@ -2,16 +2,19 @@
   <img alt="Vue logo" src="./assets/logo.png" />
   <h1>Hellow World!!</h1>
   <p>by yasunarle</p>
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Terminal/>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue'
+import Terminal from './components/Terminal.vue'
 
 export default {
   name: "App",
   components: {
-    // HelloWorld
+     HelloWorld,
+     Terminal
   },
 };
 </script>
