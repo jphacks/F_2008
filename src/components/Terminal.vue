@@ -20,7 +20,6 @@
 
 export default {
   name: "terminal",
-
   data() {
       return {
           num: 10000,
