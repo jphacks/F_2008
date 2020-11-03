@@ -3,6 +3,7 @@
   <p>parentbossHP:{{$parent.num}}</p>
   <p>myHp: {{$parent.myHp}}</p>
   <p>currentDir:{{$parent.currentPathForDisplay[$parent.currentDir]}}$</p>
+  <p>{{textInput}}</p>
   <input type="text"
   v-model="textInput"
   v-bind:disabled="this.isEnemyTurn"
@@ -10,7 +11,7 @@
   v-on:keyup.enter.exact="runCommand"
   >
   <button v-on:click="runCommand">runCommand</button>
-  <p>{{textInput}}</p>
+  <div v-for="(outputLine) in outputLines" v-bind:key="outputLine">{{outputLine}}</div>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
@@ -22,12 +23,23 @@ export default {
   data() {
       return {
           textInput: '',
+          outputLines: ['ここに','Terminalの画面に流す','Textを表示していく'],
+          outputLinesMaxLimit:10
       }
   },
   components: {
     // HelloWorld
   },
   methods: {
+    updateLines(newLine){
+    //端末の出力を書き換えたい時はこれを使う実行する
+    //今までのconsole.logをこれに変えれば画面内に表示できる
+      if (this.outputLines.length == this.outputLinesMaxLimit){
+        this.outputLines.shift()
+      }
+      this.outputLines.push(newLine);
+
+    },
     parseCommand(textInput){
       // テキスト入力をスペースで区切って配列に変換する
       // 関数の引数とかにアクセスしやすいように
@@ -63,12 +75,14 @@ export default {
           this.checkIfContinue();
           break
         default:
+          this.updateLines(`command ${this.textInput} not found`);
           console.log(`command ${this.textInput} not found`);
       }
     },
     attack() {
       if (this.$parent.isEnemyTurn === false){
         this.$parent.num -= 200;
+        this.updateLines('bossに200のダメージ');
         this.$parent.turnContinue = false;
       }
       else if(this.isEnemyTurn === true){
@@ -98,10 +112,11 @@ export default {
           console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
           if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath){
             this.$parent.currentDir = strPath;
+            this.updateLines(strPath);
             return
           }
         }
-        console.log('such a directory does not exist')
+        this.updateLines('such a directory does not exist')
       }
       this.$parent.turnContinue = true
     },
