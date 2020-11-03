@@ -1,10 +1,12 @@
 <template>
   <h1>Terminal</h1>
   <p>bossHP:{{num}}</p>
+  <p>myHp: {{myHp}}</p>
   <p>currentDir:{{currentPathForDisplay[currentDir]}}$</p>
   <p></p>
   <input type="text"
   v-model="textInput"
+  v-bind:disabled="this.isEnemyTurn"
   v-on:keydown.enter.exact.prevent
   v-on:keyup.enter.exact="runCommand"
   >
@@ -22,6 +24,9 @@ export default {
   data() {
       return {
           num: 10000,
+          myHp: 1000,
+          turnContinue:true,
+          isEnemyTurn:false,
           textInput: '',
           currentDir:'~',
           currentPathForDisplay:{'~':'~',
@@ -64,9 +69,11 @@ export default {
       switch(commandKind){
         case 'attack':
           this.attack();
+          this.checkIfContinue();
           break
         case 'cd':
           this.cd(commandArg);
+          this.checkIfContinue();
           break
         default:
           console.log(`command ${this.textInput} not found`);
@@ -74,6 +81,7 @@ export default {
     },
     attack() {
       this.num -= 200
+      this.turnContinue = false;
     },
 
     cd(strPath) {
@@ -100,8 +108,53 @@ export default {
         }
         console.log('such a directory does not exist')
       }
+      this.turnContinue = true
+    },
+    //コマンドが実行されるたびに続けるか判断
+    checkIfContinue() {
+      if(this.turnContinue === false){
+        this.changeTurnToEnemy();
+      }
+      },
+    changeTurnToEnemy(){
+      if(this.num <= 0){
+      //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
+        alert('You Win!!!');
+      }
+      else if(this.num > 0){
+        this.isEnemyTurn = false;
+        this.enemyTurn()
+      }
+    },
+    //敵のターンにする処理はこの中に入れる
+    enemyTurn(){
+      this.rm();
+      this.changeTurnToPlayer()
+    },
+    //rmは便宜的に作っただけで未完成です
+    //enemyが攻撃する際の遅延は未実装です
+    rm() {
+      if (this.isEnemyTurn == false) {
+        this.myHp -= 200;
+      }
+      else if (this.isEnemyTurn == true) {
+        console.log('isEnemyTurn boolean error');
+      }
+      else{
+        console.log('isEnemyTurn type error');
+      }
+    },
+    changeTurnToPlayer() {
+      //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
+      if(this.myHp <= 0) {
+        this.myHp = 0;
+        alert('You lose!!');
+      }
+      else if(this.myHp > 0) {
+        this.isEnemyTurn = true;
+      }
     }
-  }
+  },
 };
 </script>
 
