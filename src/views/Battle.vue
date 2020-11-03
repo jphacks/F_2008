@@ -83,7 +83,7 @@ export default {
 };
 </script>
 <style>
-.battle {
+/*.battle {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
@@ -91,7 +91,7 @@ export default {
 }
 .battle > h1 {
   color: black;
-}
+}*/
 
 .battle-screen {
   max-width: 800px;

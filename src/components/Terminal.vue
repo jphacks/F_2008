@@ -42,7 +42,11 @@ export default {
                   'left':['~'],
                   'right':['~'],
                   'home':['~']
-                  }
+                  },
+          nextDirs: {'~':['left','right'],
+                  'home':['~']
+                  },
+                
       }
   },
   components: {
@@ -71,8 +75,16 @@ export default {
           this.attack();
           this.checkIfContinue();
           break
+        case 'ls':
+          this.ls();
+          this.checkIfContinue();
+          break
         case 'cd':
           this.cd(commandArg);
+          this.checkIfContinue();
+          break
+        case 'rm':
+          this.rm();
           this.checkIfContinue();
           break
         default:
@@ -153,6 +165,9 @@ export default {
       else if(this.myHp > 0) {
         this.isEnemyTurn = true;
       }
+    },
+    ls(){
+      console.log(this.nextDirs[this.currentDir])
     }
   },
 };
