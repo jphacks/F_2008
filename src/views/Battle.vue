@@ -18,9 +18,34 @@ export default {
     TheBattleScreen
   },
   data() {
-    return {
+
+      return {
       position: "CENTER",
-    };
+      //;
+          num: 10000,
+          myHp: 1000,
+          turnContinue:true,
+          isEnemyTurn:false,
+          currentDir:'~',
+          currentPathForDisplay:{'~':'~',
+            'left':'~/left',
+            'right':'~/right',
+            'home':'/home'
+          },
+          parentDir:{'~':'home',
+            'left':'~',
+            'right':'~'
+          },
+          linkedDirs: {'~':['left','~','right'],
+                  'left':['~'],
+                  'right':['~'],
+                  'home':['~']
+                  },
+          nextDirs: {'~':['left','right'],
+                  'home':['~']
+                  },
+                
+      }
   },
 };
 </script>

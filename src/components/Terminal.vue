@@ -1,9 +1,8 @@
 <template>
   <h1>Terminal</h1>
-  <p>bossHP:{{num}}</p>
-  <p>myHp: {{myHp}}</p>
-  <p>currentDir:{{currentPathForDisplay[currentDir]}}$</p>
-  <p></p>
+  <p>parentbossHP:{{$parent.num}}</p>
+  <p>myHp: {{$parent.myHp}}</p>
+  <p>currentDir:{{$parent.currentPathForDisplay[$parent.currentDir]}}$</p>
   <input type="text"
   v-model="textInput"
   v-bind:disabled="this.isEnemyTurn"
@@ -22,30 +21,7 @@ export default {
   name: "terminal",
   data() {
       return {
-          num: 10000,
-          myHp: 1000,
-          turnContinue:true,
-          isEnemyTurn:false,
           textInput: '',
-          currentDir:'~',
-          currentPathForDisplay:{'~':'~',
-            'left':'~/left',
-            'right':'~/right',
-            'home':'/home'
-          },
-          parentDir:{'~':'home',
-            'left':'~',
-            'right':'~'
-          },
-          linkedDirs: {'~':['left','~','right'],
-                  'left':['~'],
-                  'right':['~'],
-                  'home':['~']
-                  },
-          nextDirs: {'~':['left','right'],
-                  'home':['~']
-                  },
-                
       }
   },
   components: {
@@ -92,48 +68,49 @@ export default {
     },
     attack() {
       this.num -= 200
-      this.turnContinue = false;
+      this.$parent.num -= 100
+      this.$parent.turnContinue = false;
     },
 
     cd(strPath) {
       if(strPath === ''){
-        this.currentDir = '~';
+        this.$parent.currentDir = '~';
       }
       else if(typeof strPath === 'undefined'){
-        this.currentDir = '~';
+        this.$parent.currentDir = '~';
       }
       else if(strPath === '.'){
         return
       }
       else if (strPath === '..'){
-        this.currentDir = this.parentDir[this.currentDir];
+        this.$parent.currentDir = this.$parent.parentDir[this.$parent.currentDir];
       }
       else{
         //今いるディレクトリにつながっているディレクトリを全てチェックしている
-        for(var i = 0;i < this.linkedDirs[this.currentDir].length;i++){
-          console.log(this.linkedDirs[this.currentDir][i])
-          if (this.linkedDirs[this.currentDir][i] === strPath){
-            this.currentDir = strPath;
+        for(var i = 0;i < this.$parent.linkedDirs[this.$parent.currentDir].length;i++){
+          console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
+          if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath){
+            this.$parent.currentDir = strPath;
             return
           }
         }
         console.log('such a directory does not exist')
       }
-      this.turnContinue = true
+      this.$parent.turnContinue = true
     },
     //コマンドが実行されるたびに続けるか判断
     checkIfContinue() {
-      if(this.turnContinue === false){
+      if(this.$parent.turnContinue === false){
         this.changeTurnToEnemy();
       }
       },
     changeTurnToEnemy(){
-      if(this.num <= 0){
+      if(this.$parent.num <= 0){
       //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
         alert('You Win!!!');
       }
-      else if(this.num > 0){
-        this.isEnemyTurn = false;
+      else if(this.$parent.num > 0){
+        this.$parent.isEnemyTurn = false;
         this.enemyTurn()
       }
     },
@@ -145,10 +122,10 @@ export default {
     //rmは便宜的に作っただけで未完成です
     //enemyが攻撃する際の遅延は未実装です
     rm() {
-      if (this.isEnemyTurn == false) {
-        this.myHp -= 200;
+      if (this.$parent.isEnemyTurn == false) {
+        this.$parent.myHp -= 200;
       }
-      else if (this.isEnemyTurn == true) {
+      else if (this.$parent.isEnemyTurn == true) {
         console.log('isEnemyTurn boolean error');
       }
       else{
@@ -157,16 +134,16 @@ export default {
     },
     changeTurnToPlayer() {
       //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
-      if(this.myHp <= 0) {
-        this.myHp = 0;
+      if(this.$parent.myHp <= 0) {
+        this.$parent.myHp = 0;
         alert('You lose!!');
       }
-      else if(this.myHp > 0) {
-        this.isEnemyTurn = true;
+      else if(this.$parent.myHp > 0) {
+        this.$parent.isEnemyTurn = true;
       }
     },
     ls(){
-      console.log(this.nextDirs[this.currentDir])
+      console.log(this.$parent.nextDirs[this.$parent.currentDir])
     }
   },
 };
