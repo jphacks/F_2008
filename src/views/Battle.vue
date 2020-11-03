@@ -1,22 +1,62 @@
 <template>
-  <div class="battle-page">
-    <h1>Battle Page</h1>
-    <Terminal />
+  <div class="battle">
+    <!-- Note: GUI バトル画面 -->
+    <TheBattleScreen :position="position" />
+    <!-- Note: バトルスクリーンの下にターミナルを表示する -->
+    <Terminal :position="position" />
   </div>
 </template>
 
 <script>
+// Components
 import Terminal from "../components/Terminal.vue";
+import TheBattleScreen from "../components/TheBattleScreen.vue";
 
 export default {
   components: {
     Terminal,
+    TheBattleScreen
   },
   data() {
-    return {
-      position: "center",
-    };
+
+      return {
+      position: "CENTER",
+      //;
+          num: 10000,
+          myHp: 1000,
+          turnContinue:true,
+          isEnemyTurn:false,
+          currentDir:'~',
+          currentPathForDisplay:{'~':'~',
+            'left':'~/left',
+            'right':'~/right',
+            'home':'/home'
+          },
+          parentDir:{'~':'home',
+            'left':'~',
+            'right':'~'
+          },
+          linkedDirs: {'~':['left','~','right'],
+                  'left':['~'],
+                  'right':['~'],
+                  'home':['~']
+                  },
+          nextDirs: {'~':['left','right'],
+                  'home':['~']
+                  },
+                
+      }
   },
-  methods: {},
 };
 </script>
+<style>
+.battle {
+  width: 100%;
+  min-height: 100vh;
+  background: #181a1b;
+  text-align: center;
+}
+.battle > h1 {
+  color: black;
+}
+</style>

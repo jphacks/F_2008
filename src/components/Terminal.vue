@@ -1,9 +1,8 @@
 <template>
   <h1>Terminal</h1>
-  <p>bossHP:{{num}}</p>
-  <p>myHp: {{myHp}}</p>
-  <p>currentDir:{{currentPathForDisplay[currentDir]}}$</p>
-  <p></p>
+  <p>parentbossHP:{{$parent.num}}</p>
+  <p>myHp: {{$parent.myHp}}</p>
+  <p>currentDir:{{$parent.currentPathForDisplay[$parent.currentDir]}}$</p>
   <input type="text"
   v-model="textInput"
   v-bind:disabled="this.isEnemyTurn"
@@ -20,30 +19,9 @@
 
 export default {
   name: "terminal",
-
   data() {
       return {
-          num: 10000,
-          myHp: 1000,
-          turnContinue:true,
-          isEnemyTurn:false,
           textInput: '',
-          currentDir:'~',
-          whichToRm:['~', '~/right', '~/left'],
-          currentPathForDisplay:{'~':'~',
-            'left':'~/left',
-            'right':'~/right',
-            'home':'/home'
-          },
-          parentDir:{'~':'home',
-            'left':'~',
-            'right':'~'
-          },
-          linkedDirs: {'~':['left','~','right'],
-                  'left':['~'],
-                  'right':['~'],
-                  'home':['~']
-                  }
       }
   },
   components: {
@@ -72,8 +50,16 @@ export default {
           this.attack();
           this.checkIfContinue();
           break
+        case 'ls':
+          this.ls();
+          this.checkIfContinue();
+          break
         case 'cd':
           this.cd(commandArg);
+          this.checkIfContinue();
+          break
+        case 'rm':
+          this.rm();
           this.checkIfContinue();
           break
         default:
@@ -81,11 +67,11 @@ export default {
       }
     },
     attack() {
-      if (this.isEnemyTurn==false){
-        this.num -= 200;
-        this.turnContinue = false;
+      if (this.$parent.isEnemyTurn === false){
+        this.$parent.num -= 200;
+        this.$parent.turnContinue = false;
       }
-      else if(this.isEnemyTurn == true){
+      else if(this.isEnemyTurn === true){
         console.log('your turn has not come yet')
       }
       else {
@@ -95,45 +81,45 @@ export default {
 
     cd(strPath) {
       if(strPath === ''){
-        this.currentDir = '~';
+        this.$parent.currentDir = '~';
       }
       else if(typeof strPath === 'undefined'){
-        this.currentDir = '~';
+        this.$parent.currentDir = '~';
       }
       else if(strPath === '.'){
         return
       }
       else if (strPath === '..'){
-        this.currentDir = this.parentDir[this.currentDir];
+        this.$parent.currentDir = this.$parent.parentDir[this.$parent.currentDir];
       }
       else{
         //今いるディレクトリにつながっているディレクトリを全てチェックしている
-        for(var i = 0;i < this.linkedDirs[this.currentDir].length;i++){
-          console.log(this.linkedDirs[this.currentDir][i])
-          if (this.linkedDirs[this.currentDir][i] === strPath){
-            this.currentDir = strPath;
+        for(var i = 0;i < this.$parent.linkedDirs[this.$parent.currentDir].length;i++){
+          console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
+          if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath){
+            this.$parent.currentDir = strPath;
             return
           }
         }
         console.log('such a directory does not exist')
       }
-      this.turnContinue = true
+      this.$parent.turnContinue = true
     },
     //コマンドが実行されるたびに続けるか判断
     checkIfContinue() {
-      if(this.turnContinue == false){
+      if(this.$parent.turnContinue === false){
         this.changeTurnToEnemy();
       }
       },
     changeTurnToEnemy(){
-      if(this.num <= 0){
-        this.num = 0
+      if(this.$parent.num <= 0){
+        this.$parent.num = 0
       //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
         alert('You Win!!!');
 
       }
       else if(this.num > 0){
-        this.isEnemyTurn = true;
+        this.$parent.isEnemyTurn = true;
         setTimeout(this.enemyTurn, 1000);
       }
     },
@@ -143,10 +129,10 @@ export default {
       this.changeTurnToPlayer();
     },
     rm() {
-      if (this.isEnemyTurn == true) {
-        this.myHp -= 200
+      if (this.$parent.isEnemyTurn === true) {
+        this.$parent.myHp -= 200
       }
-      else if (this.isEnemyTurn == false) {
+      else if (this.$parent.isEnemyTurn === false) {
         console.log('isEnemyTurn boolean error turn is not enemyTurn');
       }
       else{
@@ -156,13 +142,16 @@ export default {
     changeTurnToPlayer() {
       //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
       //You loseにOKを押して初めて200から0になるって感じ
-      if(this.myHp <= 0) {
-        this.myHp = 0;
+      if(this.$parent.myHp <= 0) {
+        this.$parent.myHp = 0;
         alert('You lose!!');
       }
-      else if(this.myHp > 0) {
-        this.isEnemyTurn = false;
+      else if(this.$parent.myHp > 0) {
+        this.$parent.isEnemyTurn = false;
       }
+    },
+    ls(){
+      console.log(this.$parent.nextDirs[this.$parent.currentDir])
     }
   },
 };
