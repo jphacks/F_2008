@@ -118,7 +118,7 @@ export default {
         alert('You Win!!!');
 
       }
-      else if(this.num > 0){
+      else if(this.$parent.num > 0){
         this.$parent.isEnemyTurn = true;
         setTimeout(this.enemyTurn, 1000);
       }
@@ -131,6 +131,7 @@ export default {
     rm() {
       if (this.$parent.isEnemyTurn === true) {
         this.$parent.myHp -= 200
+        console.log('reduced 200HP!')
       }
       else if (this.$parent.isEnemyTurn === false) {
         console.log('isEnemyTurn boolean error turn is not enemyTurn');
