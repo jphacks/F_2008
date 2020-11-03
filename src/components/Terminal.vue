@@ -29,6 +29,7 @@ export default {
           isEnemyTurn:false,
           textInput: '',
           currentDir:'~',
+          whichToRm:['~', '~/right', '~/left'],
           currentPathForDisplay:{'~':'~',
             'left':'~/left',
             'right':'~/right',
@@ -80,8 +81,16 @@ export default {
       }
     },
     attack() {
-      this.num -= 200
-      this.turnContinue = false;
+      if (this.isEnemyTurn==false){
+        this.num -= 200;
+        this.turnContinue = false;
+      }
+      else if(this.isEnemyTurn == true){
+        console.log('your turn has not come yet')
+      }
+      else {
+        console.log('isEnemyTurn typeerror')
+      }
     },
 
     cd(strPath) {
@@ -112,33 +121,33 @@ export default {
     },
     //コマンドが実行されるたびに続けるか判断
     checkIfContinue() {
-      if(this.turnContinue === false){
+      if(this.turnContinue == false){
         this.changeTurnToEnemy();
       }
       },
     changeTurnToEnemy(){
       if(this.num <= 0){
+        this.num = 0
       //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
         alert('You Win!!!');
+
       }
       else if(this.num > 0){
-        this.isEnemyTurn = false;
-        this.enemyTurn()
+        this.isEnemyTurn = true;
+        setTimeout(this.enemyTurn, 1000);
       }
     },
     //敵のターンにする処理はこの中に入れる
     enemyTurn(){
       this.rm();
-      this.changeTurnToPlayer()
+      this.changeTurnToPlayer();
     },
-    //rmは便宜的に作っただけで未完成です
-    //enemyが攻撃する際の遅延は未実装です
     rm() {
-      if (this.isEnemyTurn == false) {
-        this.myHp -= 200;
+      if (this.isEnemyTurn == true) {
+        this.myHp -= 200
       }
-      else if (this.isEnemyTurn == true) {
-        console.log('isEnemyTurn boolean error');
+      else if (this.isEnemyTurn == false) {
+        console.log('isEnemyTurn boolean error turn is not enemyTurn');
       }
       else{
         console.log('isEnemyTurn type error');
@@ -146,12 +155,13 @@ export default {
     },
     changeTurnToPlayer() {
       //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
+      //You loseにOKを押して初めて200から0になるって感じ
       if(this.myHp <= 0) {
         this.myHp = 0;
         alert('You lose!!');
       }
       else if(this.myHp > 0) {
-        this.isEnemyTurn = true;
+        this.isEnemyTurn = false;
       }
     }
   },
