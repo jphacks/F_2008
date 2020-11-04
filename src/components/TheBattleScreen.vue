@@ -27,27 +27,22 @@
       </div>
     </div>
     <div class="enemy-field field">
-      <img
-        class="ghost-image"
-        src="../assets/B-Ghost.png"
-        alt="Ghost Image"
-      />
+      <img class="ghost-image" src="../assets/B-Ghost.png" alt="Ghost Image" />
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: {
-  },
+  props: {},
   computed: {
     positionLeft() {
-      return this.$parent.currentDir === "left";
+      return this.$parent.currentDir === 'left'
     },
     positionCenter() {
-      return this.$parent.currentDir === "~";
+      return this.$parent.currentDir === '~'
     },
     positionRight() {
-      return this.$parent.currentDir === "right";
+      return this.$parent.currentDir === 'right'
     },
   },
 }
@@ -58,7 +53,7 @@ export default {
   min-height: 400px;
   margin: auto;
   position: relative;
-  background-image: url("../assets/backgroud_glass.png");
+  background-image: url('../assets/backgroud_glass.png');
   background-size: cover;
 }
 .battle-screen img {

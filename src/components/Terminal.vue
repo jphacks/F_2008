@@ -19,34 +19,33 @@
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: "terminal",
+  name: 'terminal',
   data() {
-      return {
-          textInput: '',
-          outputLines: ['ここに','Terminalの画面に流す','Textを表示していく', 'あなたのターンです'],
-          outputLinesMaxLimit:10
-      }
+    return {
+      textInput: '',
+      outputLines: ['ここに', 'Terminalの画面に流す', 'Textを表示していく', 'あなたのターンです'],
+      outputLinesMaxLimit: 10,
+    }
   },
   components: {
     // HelloWorld
   },
   methods: {
-    updateLines(newLine){
-    //端末の出力を書き換えたい時はこれを使う実行する
-    //今までのconsole.logをこれに変えれば画面内に表示できる
-      if (this.outputLines.length == this.outputLinesMaxLimit){
+    updateLines(newLine) {
+      //端末の出力を書き換えたい時はこれを使う実行する
+      //今までのconsole.logをこれに変えれば画面内に表示できる
+      if (this.outputLines.length == this.outputLinesMaxLimit) {
         this.outputLines.shift()
       }
-      this.outputLines.push(newLine);
-
+      this.outputLines.push(newLine)
     },
-    parseCommand(textInput){
+    parseCommand(textInput) {
       // テキスト入力をスペースで区切って配列に変換する
       // 関数の引数とかにアクセスしやすいように
       // runCommandメソッド直下で実行
-      console.log("parseSTART:",textInput);
-      var parsedCommandsArray = textInput.split(/[\s]+/);
-      console.log("parseEND:",textInput)
+      console.log('parseSTART:', textInput)
+      var parsedCommandsArray = textInput.split(/[\s]+/)
+      console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
     runCommand() {
@@ -64,20 +63,20 @@ export default {
           this.checkIfContinue();
           break
         case 'ls':
-          this.ls();
-          this.checkIfContinue();
+          this.ls()
+          this.checkIfContinue()
           break
         case 'cd':
-          this.cd(commandArg);
-          this.checkIfContinue();
+          this.cd(commandArg)
+          this.checkIfContinue()
           break
         case 'rm':
-          this.rm();
-          this.checkIfContinue();
+          this.rm()
+          this.checkIfContinue()
           break
         default:
-          this.updateLines(`command ${this.textInput} not found`);
-          console.log(`command ${this.textInput} not found`);
+          this.updateLines(`command ${this.textInput} not found`)
+          console.log(`command ${this.textInput} not found`)
       }
     },
     source(commandArg){
@@ -96,35 +95,35 @@ export default {
         }
       }
       else if(this.$parent.isEnemyTurn === true){
-        
         console.log('your turn has not come yet')
-      }
-      else {
+      } else {
         console.log('isEnemyTurn typeerror')
         console.log(this.$parent.isEnemyTurn)
       }
       this.$parent.turnContinue = false;
     },
     cd(strPath) {
-      if(strPath === ''){
-        this.$parent.currentDir = '~';
-      }
-      else if(typeof strPath === 'undefined'){
-        this.$parent.currentDir = '~';
-      }
-      else if(strPath === '.'){
+      if (strPath === '') {
+        this.$parent.currentDir = '~'
+      } else if (typeof strPath === 'undefined') {
+        this.$parent.currentDir = '~'
+      } else if (strPath === '.') {
         return
-      }
-      else if (strPath === '..'){
-        this.$parent.currentDir = this.$parent.parentDir[this.$parent.currentDir];
-      }
-      else{
+      } else if (strPath === '..') {
+        this.$parent.currentDir = this.$parent.parentDir[
+          this.$parent.currentDir
+        ]
+      } else {
         //今いるディレクトリにつながっているディレクトリを全てチェックしている
-        for(var i = 0;i < this.$parent.linkedDirs[this.$parent.currentDir].length;i++){
+        for (
+          var i = 0;
+          i < this.$parent.linkedDirs[this.$parent.currentDir].length;
+          i++
+        ) {
           console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
-          if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath){
-            this.$parent.currentDir = strPath;
-            this.updateLines(strPath);
+          if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath) {
+            this.$parent.currentDir = strPath
+            this.updateLines(strPath)
             return
           }
         }
@@ -134,12 +133,12 @@ export default {
     },
     //コマンドが実行されるたびに続けるか判断
     checkIfContinue() {
-      if(this.$parent.turnContinue === false){
-        this.changeTurnToEnemy();
+      if (this.$parent.turnContinue === false) {
+        this.changeTurnToEnemy()
       }
-      },
-    changeTurnToEnemy(){
-      if(this.$parent.num <= 0){
+    },
+    changeTurnToEnemy() {
+      if (this.$parent.num <= 0) {
         this.$parent.num = 0
         this.updateLines('あなたの勝利です!')
 
@@ -205,6 +204,5 @@ export default {
       this.$parent.turnContinue = true;
     }
   },
-};
+}
 </script>
-
