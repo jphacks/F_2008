@@ -74,6 +74,10 @@ export default {
           this.rm()
           this.checkIfContinue()
           break
+        case 'mkdir':
+          this.mkdir(commandArg)
+          this.checkIfContinue()
+          break
         default:
           this.updateLines(`command ${this.textInput} not found`)
           console.log(`command ${this.textInput} not found`)
@@ -102,6 +106,10 @@ export default {
       }
       this.$parent.turnContinue = false;
     },
+    mkdir(dirName) {
+      //FIX同名の場合はバグる
+      this.$parent.nextDirs[this.$parent.currentDir].push(dirName)    },
+
     cd(strPath) {
       if (strPath === '') {
         this.$parent.currentDir = '~'
@@ -197,12 +205,17 @@ export default {
         this.$parent.isEnemyTurn = false;
       }
     },
-    ls(){
-      this.updateLines(this.$parent.nextDirs[this.$parent.currentDir])
+    
+    ls() {
+      let childArray = this.$parent.nextDirs[this.$parent.currentDir]
+      for(let i = 0;i < childArray.length;i++){
+        this.updateLines(childArray[i])
+      }
       this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
       console.log(this.$parent.nextDirs[this.$parent.currentDir])
       this.$parent.turnContinue = true;
     }
+
   },
 }
 </script>
