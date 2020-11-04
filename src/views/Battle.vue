@@ -1,9 +1,9 @@
 <template>
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
-    <TheBattleScreen :position="position" />
+    <TheBattleScreen/>
     <!-- Note: バトルスクリーンの下にターミナルを表示する -->
-    <Terminal :position="position" />
+    <Terminal/>
   </div>
 </template>
 
@@ -20,8 +20,6 @@ export default {
   data() {
 
       return {
-      position: "CENTER",
-      //;
           num: 10000,
           myHp: 1000,
           turnContinue:true,

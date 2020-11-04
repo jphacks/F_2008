@@ -38,19 +38,16 @@
 <script>
 export default {
   props: {
-    position: {
-      type: String
-    }
   },
   computed: {
     positionLeft() {
-      return this.position === "LEFT";
+      return this.$parent.currentDir === "left";
     },
     positionCenter() {
-      return this.position === "CENTER";
+      return this.$parent.currentDir === "~";
     },
     positionRight() {
-      return this.position === "RIGHT";
+      return this.$parent.currentDir === "right";
     },
   },
 }
