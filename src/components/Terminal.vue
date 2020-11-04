@@ -9,7 +9,7 @@
     </div>
     <div class="inputField">
       <span>$</span>
-          <input
+      <input
         type="text"
         v-model="textInput"
         v-bind:disabled="this.$parent.isEnemyTurn"
@@ -239,8 +239,11 @@ export default {
 .terminal > * {
   color: white;
 }
-.terminal > input {
+.inputField > input {
   background: none;
+  color: white; 
+  outline: 0;
+  border: none;
 }
 .inputField > span{
   color: aqua;
