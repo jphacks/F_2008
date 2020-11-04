@@ -7,7 +7,7 @@
   <div v-for="(outputLine) in outputLines" v-bind:key="outputLine">{{outputLine}}</div>
   <input type="text"
   v-model="textInput"
-  v-bind:disabled="this.isEnemyTurn"
+  v-bind:disabled="this.$parent.isEnemyTurn"
   v-on:keydown.enter.exact.prevent
   v-on:keyup.enter.exact="runCommand"
   >
@@ -59,8 +59,8 @@ export default {
       }
       console.log(commandKind);
       switch(commandKind){
-        case 'attack':
-          this.attack();
+        case 'source':
+          this.source(commandArg);
           this.checkIfContinue();
           break
         case 'ls':
@@ -80,20 +80,31 @@ export default {
           console.log(`command ${this.textInput} not found`);
       }
     },
-    attack() {
+    source(commandArg){
       if (this.$parent.isEnemyTurn === false){
-        this.$parent.num -= 200;
-        this.updateLines('bossに200のダメージ');
-        this.$parent.turnContinue = false;
+        let sourceDir = this.$parent.currentDir
+        if (commandArg in this.$parent.armsPosition[sourceDir]){
+          let armsDamage = this.$parent.armsPosition[sourceDir][commandArg]
+          this.$parent.num -= armsDamage;
+          this.updateLines(`${commandArg}を使った`)
+          this.updateLines(`bossに${armsDamage}のダメージ`);
+          this.$parent.turnContinue = false
+        }
+        else{
+          this.updateLines('現在のファイルには指定した武器ファイルが存在しません')
+          console.log('現在のファイルには指定した武器ファイルが存在しません')
+        }
       }
-      else if(this.isEnemyTurn === true){
+      else if(this.$parent.isEnemyTurn === true){
+        
         console.log('your turn has not come yet')
       }
       else {
         console.log('isEnemyTurn typeerror')
+        console.log(this.$parent.isEnemyTurn)
       }
+      this.$parent.turnContinue = false;
     },
-
     cd(strPath) {
       if(strPath === ''){
         this.$parent.currentDir = '~';
@@ -144,8 +155,10 @@ export default {
     },
     //敵のターンにする処理はこの中に入れる
     enemyTurn(){
+      if (this.$parent.isEnemyTurn == true) {
       this.rm();
       this.changeTurnToPlayer();
+      }
     },
     rm() {
       //~が攻撃される確率をへらすためにrmPositionnにright とleftを増やしています
@@ -156,7 +169,7 @@ export default {
         this.updateLines(`Bossは'${whichToRm}'以下のフォルダを攻撃した！`)
         if (whichToRm == '~') {
           this.updateLines(`playerに${bossRmDamage}のダメージ！`)
-          console.logs(`playerに${bossRmDamage}のダメージ！`)
+          console.log(`playerに${bossRmDamage}のダメージ！`)
         }
         else if (whichToRm ==  this.$parent.currentDir) {
           this.$parent.myHp -= bossRmDamage;
@@ -187,8 +200,9 @@ export default {
     },
     ls(){
       this.updateLines(this.$parent.nextDirs[this.$parent.currentDir])
+      this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
       console.log(this.$parent.nextDirs[this.$parent.currentDir])
-      
+      this.$parent.turnContinue = true;
     }
   },
 };

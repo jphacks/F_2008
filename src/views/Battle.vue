@@ -30,6 +30,11 @@ export default {
             'spear':250,
             'hummer': 300
           },
+          armsPosition: {
+            '~':{sword:100, gun:1000},
+            'left':{rock:200, stick:10},
+            'right':{spear:250, hummer:300}
+          },
           turnContinue:true,
           isEnemyTurn:false,
           currentDir:'~',
