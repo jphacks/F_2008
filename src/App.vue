@@ -12,7 +12,13 @@ body {
 body * {
   padding: 0;
   margin: 0;
+  /* Note: Font レトロチック */
+  font-family: Comic Sans MS;
+  font-weight: 500;
+  -webkit-font-smoothing: none;  
 }
+
+
 
 /* #nav a {
   font-weight: bold;
