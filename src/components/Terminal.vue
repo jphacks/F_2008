@@ -1,20 +1,17 @@
 <template>
   <h1>Terminal</h1>
-  <p>parentbossHP:{{ $parent.num }}</p>
-  <p>myHp: {{ $parent.myHp }}</p>
-  <p>currentDir:{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</p>
-  <p>{{ textInput }}</p>
-  <input
-    type="text"
-    v-model="textInput"
-    v-bind:disabled="this.isEnemyTurn"
-    v-on:keydown.enter.exact.prevent
-    v-on:keyup.enter.exact="runCommand"
-  />
+  <p>parentbossHP:{{$parent.num}}</p>
+  <p>myHp: {{$parent.myHp}}</p>
+  <p>currentDir:{{$parent.currentPathForDisplay[$parent.currentDir]}}$</p>
+  <p>{{textInput}}</p>
+  <div v-for="(outputLine) in outputLines" v-bind:key="outputLine">{{outputLine}}</div>
+  <input type="text"
+  v-model="textInput"
+  v-bind:disabled="this.$parent.isEnemyTurn"
+  v-on:keydown.enter.exact.prevent
+  v-on:keyup.enter.exact="runCommand"
+  >
   <button v-on:click="runCommand">runCommand</button>
-  <div v-for="outputLine in outputLines" v-bind:key="outputLine">
-    {{ outputLine }}
-  </div>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
@@ -26,7 +23,7 @@ export default {
   data() {
     return {
       textInput: '',
-      outputLines: ['ここに', 'Terminalの画面に流す', 'Textを表示していく'],
+      outputLines: ['ここに', 'Terminalの画面に流す', 'Textを表示していく', 'あなたのターンです'],
       outputLinesMaxLimit: 10,
     }
   },
@@ -52,17 +49,18 @@ export default {
       return parsedCommandsArray
     },
     runCommand() {
-      var parsedCommandsArray = this.parseCommand(this.textInput)
-      console.log(parsedCommandsArray)
-      var commandKind = parsedCommandsArray[0]
-      if (parsedCommandsArray.length >= 2) {
-        var commandArg = parsedCommandsArray[1]
+      var parsedCommandsArray = this.parseCommand(this.textInput);
+      console.log(parsedCommandsArray);
+      this.updateLines(this.textInput)
+      var commandKind = parsedCommandsArray[0];
+      if (parsedCommandsArray.length >= 2){
+        var commandArg = parsedCommandsArray[1];
       }
-      console.log(commandKind)
-      switch (commandKind) {
-        case 'attack':
-          this.attack()
-          this.checkIfContinue()
+      console.log(commandKind);
+      switch(commandKind){
+        case 'source':
+          this.source(commandArg);
+          this.checkIfContinue();
           break
         case 'ls':
           this.ls()
@@ -81,18 +79,29 @@ export default {
           console.log(`command ${this.textInput} not found`)
       }
     },
-    attack() {
-      if (this.$parent.isEnemyTurn === false) {
-        this.$parent.num -= 200
-        this.updateLines('bossに200のダメージ')
-        this.$parent.turnContinue = false
-      } else if (this.isEnemyTurn === true) {
+    source(commandArg){
+      if (this.$parent.isEnemyTurn === false){
+        let sourceDir = this.$parent.currentDir
+        if (commandArg in this.$parent.armsPosition[sourceDir]){
+          let armsDamage = this.$parent.armsPosition[sourceDir][commandArg]
+          this.$parent.num -= armsDamage;
+          this.updateLines(`${commandArg}を使った`)
+          this.updateLines(`bossに${armsDamage}のダメージ`);
+          this.$parent.turnContinue = false
+        }
+        else{
+          this.updateLines('現在のファイルには指定した武器ファイルが存在しません')
+          console.log('現在のファイルには指定した武器ファイルが存在しません')
+        }
+      }
+      else if(this.$parent.isEnemyTurn === true){
         console.log('your turn has not come yet')
       } else {
         console.log('isEnemyTurn typeerror')
+        console.log(this.$parent.isEnemyTurn)
       }
+      this.$parent.turnContinue = false;
     },
-
     cd(strPath) {
       if (strPath === '') {
         this.$parent.currentDir = '~'
@@ -131,41 +140,69 @@ export default {
     changeTurnToEnemy() {
       if (this.$parent.num <= 0) {
         this.$parent.num = 0
-        //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
-        alert('You Win!!!')
-      } else if (this.$parent.num > 0) {
-        this.$parent.isEnemyTurn = true
-        setTimeout(this.enemyTurn, 1000)
+        this.updateLines('あなたの勝利です!')
+
+      }
+      else if(this.$parent.num > 0){
+        this.updateLines('Bossのターンです')
+        this.$parent.isEnemyTurn = true;
+        setTimeout(this.enemyTurn, 1000);
+      }
+      else {
+        console.log('changeTurnToEnemyがエラーを吐いています')
       }
     },
     //敵のターンにする処理はこの中に入れる
-    enemyTurn() {
-      this.rm()
-      this.changeTurnToPlayer()
+    enemyTurn(){
+      if (this.$parent.isEnemyTurn == true) {
+      this.rm();
+      this.changeTurnToPlayer();
+      }
     },
     rm() {
+      //~が攻撃される確率をへらすためにrmPositionnにright とleftを増やしています
+      let rmPosition = ['~', 'right', 'right', 'right', 'left', 'left', 'left']
+      let bossRmDamage = 200;
       if (this.$parent.isEnemyTurn === true) {
-        this.$parent.myHp -= 200
-        console.log('reduced 200HP!')
-      } else if (this.$parent.isEnemyTurn === false) {
-        console.log('isEnemyTurn boolean error turn is not enemyTurn')
-      } else {
-        console.log('isEnemyTurn type error')
+        let whichToRm = rmPosition[Math.floor(Math.random() * rmPosition.length)]
+        this.updateLines(`Bossは'${whichToRm}'以下のフォルダを攻撃した！`)
+        if (whichToRm == '~') {
+          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+          console.log(`playerに${bossRmDamage}のダメージ！`)
+        }
+        else if (whichToRm ==  this.$parent.currentDir) {
+          this.$parent.myHp -= bossRmDamage;
+          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+          console.logs(`playerに${bossRmDamage}のダメージ！`)
+        }
+        else {
+          this.updateLines('Bossの攻撃は外れた！')
+        }
+
+      }
+      else if (this.$parent.isEnemyTurn === false) {
+        console.log('isEnemyTurn boolean error turn is not enemyTurn');
+      }
+      else{
+        console.log('isEnemyTurn type error');
       }
     },
     changeTurnToPlayer() {
-      //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
-      //You loseにOKを押して初めて200から0になるって感じ
-      if (this.$parent.myHp <= 0) {
-        this.$parent.myHp = 0
-        alert('You lose!!')
-      } else if (this.$parent.myHp > 0) {
-        this.$parent.isEnemyTurn = false
+      if(this.$parent.myHp <= 0) {
+        this.$parent.myHp = 0;
+        this.updateLines('あなたの敗北です')
+      }
+      else if(this.$parent.myHp > 0) {
+        this.updateLines('あなたのターンです')
+        this.$parent.isEnemyTurn = false;
       }
     },
-    ls() {
+    ls(){
+      this.updateLines(this.$parent.nextDirs[this.$parent.currentDir])
+      this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
       console.log(this.$parent.nextDirs[this.$parent.currentDir])
-    },
+      this.$parent.turnContinue = true;
+    }
   },
 }
 </script>
