@@ -4,6 +4,7 @@
   <p>myHp: {{$parent.myHp}}</p>
   <p>currentDir:{{$parent.currentPathForDisplay[$parent.currentDir]}}$</p>
   <p>{{textInput}}</p>
+  <div v-for="(outputLine) in outputLines" v-bind:key="outputLine">{{outputLine}}</div>
   <input type="text"
   v-model="textInput"
   v-bind:disabled="this.isEnemyTurn"
@@ -11,7 +12,6 @@
   v-on:keyup.enter.exact="runCommand"
   >
   <button v-on:click="runCommand">runCommand</button>
-  <div v-for="(outputLine) in outputLines" v-bind:key="outputLine">{{outputLine}}</div>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
@@ -23,7 +23,7 @@ export default {
   data() {
       return {
           textInput: '',
-          outputLines: ['ここに','Terminalの画面に流す','Textを表示していく'],
+          outputLines: ['ここに','Terminalの画面に流す','Textを表示していく', 'あなたのターンです'],
           outputLinesMaxLimit:10
       }
   },
@@ -52,6 +52,7 @@ export default {
     runCommand() {
       var parsedCommandsArray = this.parseCommand(this.textInput);
       console.log(parsedCommandsArray);
+      this.updateLines(this.textInput)
       var commandKind = parsedCommandsArray[0];
       if (parsedCommandsArray.length >= 2){
         var commandArg = parsedCommandsArray[1];
@@ -129,13 +130,16 @@ export default {
     changeTurnToEnemy(){
       if(this.$parent.num <= 0){
         this.$parent.num = 0
-      //alertでYou Win と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
-        alert('You Win!!!');
+        this.updateLines('あなたの勝利です!')
 
       }
       else if(this.$parent.num > 0){
+        this.updateLines('Bossのターンです')
         this.$parent.isEnemyTurn = true;
         setTimeout(this.enemyTurn, 1000);
+      }
+      else {
+        console.log('changeTurnToEnemyがエラーを吐いています')
       }
     },
     //敵のターンにする処理はこの中に入れる
@@ -144,9 +148,25 @@ export default {
       this.changeTurnToPlayer();
     },
     rm() {
+      //~が攻撃される確率をへらすためにrmPositionnにright とleftを増やしています
+      let rmPosition = ['~', 'right', 'right', 'right', 'left', 'left', 'left']
+      let bossRmDamage = 200;
       if (this.$parent.isEnemyTurn === true) {
-        this.$parent.myHp -= 200
-        console.log('reduced 200HP!')
+        let whichToRm = rmPosition[Math.floor(Math.random() * rmPosition.length)]
+        this.updateLines(`Bossは'${whichToRm}'以下のフォルダを攻撃した！`)
+        if (whichToRm == '~') {
+          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+          console.logs(`playerに${bossRmDamage}のダメージ！`)
+        }
+        else if (whichToRm ==  this.$parent.currentDir) {
+          this.$parent.myHp -= bossRmDamage;
+          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+          console.logs(`playerに${bossRmDamage}のダメージ！`)
+        }
+        else {
+          this.updateLines('Bossの攻撃は外れた！')
+        }
+
       }
       else if (this.$parent.isEnemyTurn === false) {
         console.log('isEnemyTurn boolean error turn is not enemyTurn');
@@ -156,18 +176,19 @@ export default {
       }
     },
     changeTurnToPlayer() {
-      //alertでYou lose と表示されるとき、まだ体力表示が0以下の値に変わっておらず、alertが押されてから0以下になるという問題あり
-      //You loseにOKを押して初めて200から0になるって感じ
       if(this.$parent.myHp <= 0) {
         this.$parent.myHp = 0;
-        alert('You lose!!');
+        this.updateLines('あなたの敗北です')
       }
       else if(this.$parent.myHp > 0) {
+        this.updateLines('あなたのターンです')
         this.$parent.isEnemyTurn = false;
       }
     },
     ls(){
+      this.updateLines(this.$parent.nextDirs[this.$parent.currentDir])
       console.log(this.$parent.nextDirs[this.$parent.currentDir])
+      
     }
   },
 };

@@ -22,6 +22,14 @@ export default {
       return {
           num: 10000,
           myHp: 1000,
+          arms: {
+            'sword':100,
+            'gun':1000,
+            'rock': 200,
+            'stick': 10,
+            'spear':250,
+            'hummer': 300
+          },
           turnContinue:true,
           isEnemyTurn:false,
           currentDir:'~',
