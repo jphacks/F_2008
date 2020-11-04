@@ -30,6 +30,19 @@ export default {
         right: '~/right',
         home: '/home',
       },
+      arms: {
+        'sword':100,
+        'gun':1000,
+        'rock': 200,
+        'stick': 10,
+        'spear':250,
+        'hummer': 300
+      },
+      armsPosition: {
+        '~':{sword:100, gun:1000},
+        'left':{rock:200, stick:10},
+        'right':{spear:250, hummer:300}
+      },
       parentDir: { '~': 'home', left: '~', right: '~' },
       linkedDirs: {
         '~': ['left', '~', 'right'],
