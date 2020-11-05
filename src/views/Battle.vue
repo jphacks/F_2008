@@ -1,11 +1,16 @@
 <template>
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
-    <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" />
+    <div class="leftScreen">
+    <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" class="locateTheBattleScreen"/>
     <AppSpacer :height="36" />
     <!-- Note: バトルスクリーンの下にターミナルを表示する -->
-    <Terminal />
-    <TheBattleHelp />
+    <Terminal  class="locateTerminal"/>
+    </div>
+
+    <div class="rightScreen">
+      <TheBattleHelp class="locateTheBattleHelp" />
+    </div>
   </div>
 </template>
 
