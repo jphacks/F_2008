@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AppSpacer :height="50"/>
+    <AppSpacer :height="50" />
     <h1 class="title">Terminal RPG</h1>
     <AppSpacer :height="250" />
     <div class="appBtn">
@@ -27,7 +27,7 @@ export default {
   background-image: url('../assets/homepage-background.png');
   background-size: cover;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   align-items: center;
 }
 .appBtn {
