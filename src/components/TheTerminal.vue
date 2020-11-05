@@ -57,7 +57,7 @@ export default {
     },
     _utilRandomRangeInt(minInt, maxInt){
       //ゲームバランス調整用
-      //整数の範囲を指定してその中のランダムな整数を返す
+      //minInt以上maxInt未満の整数を等確率で返す
       return Math.floor(Math.random()*(maxInt-minInt)+minInt)
     },
     runCommand() {
@@ -202,26 +202,24 @@ export default {
     rm() {
       //~が攻撃される確率をへらすためにrmPositionnにright とleftを増やしています
       let rmPosition = ['~', 'right', 'right', 'right', 'left', 'left', 'left']
-      let bossRmDamage = 200
-      if (this.$parent.isEnemyTurn === true) {
-        let whichToRm =
-          rmPosition[Math.floor(Math.random() * rmPosition.length)]
-        this.updateLines(`Bossは'${whichToRm}'以下のフォルダを攻撃した！`)
-        if (whichToRm == '~') {
-          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
-          console.log(`playerに${bossRmDamage}のダメージ！`)
-        } else if (whichToRm == this.$parent.currentDir) {
-          this.$parent.myHp -= bossRmDamage
-          this.updateLines(`playerに${bossRmDamage}のダメージ！`)
-          console.logs(`playerに${bossRmDamage}のダメージ！`)
-        } else {
-          this.updateLines('Bossの攻撃は外れた！')
-        }
-      } else if (this.$parent.isEnemyTurn === false) {
-        console.log('isEnemyTurn boolean error turn is not enemyTurn')
+      //let rmPosition = ['~','right','left']
+      let rmIndex = this._utilRandomRangeInt(0,rmPosition.length)
+      let bossRmDamage = this._utilRandomRangeInt(100,300)
+      let targetDir = rmPosition[rmIndex]
+      this.updateLines(`Bossは'${targetDir}'以下のフォルダを攻撃した！`)
+      if (targetDir == '~') {
+        this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+      } else if (targetDir == this.$parent.currentDir) {
+        this.$parent.myHp -= bossRmDamage
+        this.updateLines(`playerに${bossRmDamage}のダメージ！`)
       } else {
-        console.log('isEnemyTurn type error')
+        this.updateLines('Bossの攻撃は外れた！')
       }
+
+      if (this.$parent.isEnemyTurn == false){
+        this.updateLines('rmが敵のターンでないのに実行されてます')
+      }
+
     },
     changeTurnToPlayer() {
       if (this.$parent.myHp <= 0) {
