@@ -1,22 +1,37 @@
 <template>
   <div class="home">
-    <h1>Home 画面</h1>
-    <div>
+    <AppSpacer :height="50" />
+    <h1 class="title">Terminal RPG</h1>
+    <AppSpacer :height="230" />
+    <AppBlueButton>
       <router-link to="/battle">Battle</router-link>
-    </div>
-    <div>
-      <router-link to="/about">About Page へ</router-link>
-    </div>
+    </AppBlueButton>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import AppSpacer from '../components/AppSpacer.vue'
+import AppBlueButton from '../components/AppBlueButton.vue'
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    // HelloWorld
+    AppSpacer,
+    AppBlueButton,
   },
-};
+}
 </script>
+<style lang="scss">
+.home {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('../assets/homepage-background.png');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    font-size: 38px;
+  }
+}
+</style>
