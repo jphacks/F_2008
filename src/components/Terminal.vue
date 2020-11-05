@@ -48,10 +48,16 @@ export default {
     updateLines(newLine) {
       //端末の出力を書き換えたい時はこれを使う実行する
       //今までのconsole.logをこれに変えれば画面内に表示できる
-      if (this.outputLines.length == this.outputLinesMaxLimit) {
+      this.outputLines.push(newLine)
+      //this.outputLines.push(this.outputLines.length)
+      let overLinesNum = this.outputLines.length - this.outputLinesMaxLimit
+      for (let i = 0; i < overLinesNum; i++) {
         this.outputLines.shift()
       }
-      this.outputLines.push(newLine)
+      console.log(this.outputLines)
+      //if (this.outputLines.length == this.outputLinesMaxLimit) {
+      //  this.outputLines.shift()
+      //}
     },
     parseCommand(textInput) {
       // テキスト入力をスペースで区切って配列に変換する
@@ -71,6 +77,7 @@ export default {
         var commandArg = parsedCommandsArray[1]
       }
       console.log(commandKind)
+      this.textInput = ''
       switch (commandKind) {
         case 'source':
           this.source(commandArg)
@@ -91,6 +98,9 @@ export default {
         case 'mkdir':
           this.mkdir(commandArg)
           this.checkIfContinue()
+          break
+        case 'clear':
+          this.outputLines = []
           break
         default:
           this.updateLines(`command ${this.textInput} not found`)
@@ -214,12 +224,16 @@ export default {
     },
 
     ls() {
-      let childArray = this.$parent.nextDirs[this.$parent.currentDir]
-      for (let i = 0; i < childArray.length; i++) {
-        this.updateLines(childArray[i])
+      let childDirsArray = this.$parent.nextDirs[this.$parent.currentDir]
+      for (let i = 0; i < childDirsArray.length; i++) {
+        this.updateLines(childDirsArray[i])
       }
+      //let childArmsArray = this.$parent.armsPosition[this.$parent.currentDir]
+      //for (let i = 0; i < childArmsArray.length; i++) {
+      //  console.log(childArmsArray)
+      //  this.updateLines(childArmsArray[i])
+      //}
       this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
-      console.log(this.$parent.nextDirs[this.$parent.currentDir])
       this.$parent.turnContinue = true
     },
   },
