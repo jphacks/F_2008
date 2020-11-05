@@ -67,9 +67,9 @@ export default {
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
       }
-      console.log(commandKind)
+      console.log(commandKind);
       this.textInput = ''
-      switch (commandKind) {
+      switch(commandKind){
         case 'source':
           this.source(commandArg)
           this.checkIfContinue()
