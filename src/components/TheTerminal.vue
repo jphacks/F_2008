@@ -237,7 +237,7 @@ export default {
   border: 2px solid white;
   border-radius: 4px;
   overflow: auto;
-  * {
+.terminal > * {
     color: white;
   }
   .input-container {
