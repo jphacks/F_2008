@@ -2,7 +2,12 @@
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
     <div class="leftScreen">
-      <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" class="locBattleScreen"/>
+      <TheBattleScreen
+        class="locBattleScreen"
+        :myHp="myHp"
+        :enemyHp="num"
+        :currentDir="currentDir"        
+      />
       <AppSpacer :height="36" />
       <!-- Note: バトルスクリーンの下にターミナルを表示する -->
       <TheTerminal />
@@ -67,16 +72,16 @@ export default {
   background: #181a1b;
 }
 .battle:after {
-  content: "";
+  content: '';
   display: block;
-  clear:both;
+  clear: both;
 }
 .rightScreen {
   width: 30%;
-  float:left;
+  float: left;
 }
 .leftScreen {
   width: 70%;
-  float:left;
+  float: left;
 }
 </style>

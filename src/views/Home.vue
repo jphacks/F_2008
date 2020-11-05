@@ -2,25 +2,26 @@
   <div class="home">
     <AppSpacer :height="50" />
     <h1 class="title">Terminal RPG</h1>
-    <AppSpacer :height="250" />
-    <div class="appBtn">
+    <AppSpacer :height="230" />
+    <AppBlueButton>
       <router-link to="/battle">Battle</router-link>
-    </div>
+    </AppBlueButton>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import AppSpacer from '../components/AppSpacer.vue'
+import AppBlueButton from '../components/AppBlueButton.vue'
 
 export default {
   name: 'Home',
   components: {
     AppSpacer,
+    AppBlueButton,
   },
 }
 </script>
-<style>
+<style lang="scss">
 .home {
   width: 100%;
   min-height: 100vh;
@@ -29,16 +30,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.appBtn {
-  width: fit-content;
-  padding: 4px 8px;
-  background: black;
-  border-radius: 4px;
-}
-.appBtn > a {
-  color: red;
-  text-decoration: none;
-  font-size: 28px;
+  .title {
+    font-size: 38px;
+  }
 }
 </style>
