@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="app-vue-container">
     <router-view />
   </div>
 </template>
@@ -15,7 +15,7 @@ body * {
   /* Note: Font レトロチック */
   font-family: Comic Sans MS;
   font-weight: 500;
-  -webkit-font-smoothing: none;  
+  -webkit-font-smoothing: none;
 }
 
 

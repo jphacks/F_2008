@@ -1,17 +1,13 @@
 <template>
-  <!-- Note: テスト機能 -->
-  <!-- <button v-on:click="runCommand">runCommand</button>
-  <p>parentbossHP:{{ $parent.num }}</p>
-  <p>myHp: {{ $parent.myHp }}</p>
-  <p>currentDir:{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</p>
-  <p>{{ textInput }}</p> -->
-
-  <!-- Note: 実際の機能 -->
   <div class="terminal">
-    <div v-for="outputLine in outputLines" v-bind:key="outputLine">
-      {{ outputLine }}
+    <!-- Note: ログを表示するコンテイナー -->
+    <div class="outputs-container">
+      <p v-for="outputLine in outputLines" v-bind:key="outputLine">
+        {{ outputLine }}
+      </p>
     </div>
-    <div class="inputField">
+    <!-- Note:  入力関係をまとめたコンテイナー -->
+    <div class="input-container">
       <span>{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</span>
       <input
         type="text"
@@ -25,33 +21,30 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'terminal',
   data() {
     return {
       textInput: '',
-      outputLines: [
-        // 'ここに',
-        // 'Terminalの画面に流す',
-        // 'Textを表示していく',
-        // 'あなたのターンです',
-      ],
+      outputLines: [],
       outputLinesMaxLimit: 10,
     }
-  },
-  components: {
-    // HelloWorld
   },
   methods: {
     updateLines(newLine) {
       //端末の出力を書き換えたい時はこれを使う実行する
       //今までのconsole.logをこれに変えれば画面内に表示できる
-      if (this.outputLines.length == this.outputLinesMaxLimit) {
+      this.outputLines.push(newLine)
+      //this.outputLines.push(this.outputLines.length)
+      let overLinesNum = this.outputLines.length - this.outputLinesMaxLimit
+      for (let i = 0; i < overLinesNum; i++) {
         this.outputLines.shift()
       }
-      this.outputLines.push(newLine)
+      console.log(this.outputLines)
+      //if (this.outputLines.length == this.outputLinesMaxLimit) {
+      //  this.outputLines.shift()
+      //}
     },
     parseCommand(textInput) {
       // テキスト入力をスペースで区切って配列に変換する
@@ -92,6 +85,9 @@ export default {
         case 'mkdir':
           this.mkdir(commandArg)
           this.checkIfContinue()
+          break
+        case 'clear':
+          this.outputLines = []
           break
         default:
           this.updateLines(`command ${this.textInput} not found`)
@@ -215,19 +211,23 @@ export default {
     },
 
     ls() {
-      let childArray = this.$parent.nextDirs[this.$parent.currentDir]
-      for (let i = 0; i < childArray.length; i++) {
-        this.updateLines(childArray[i])
+      let childDirsArray = this.$parent.nextDirs[this.$parent.currentDir]
+      for (let i = 0; i < childDirsArray.length; i++) {
+        this.updateLines(childDirsArray[i])
       }
+      //let childArmsArray = this.$parent.armsPosition[this.$parent.currentDir]
+      //for (let i = 0; i < childArmsArray.length; i++) {
+      //  console.log(childArmsArray)
+      //  this.updateLines(childArmsArray[i])
+      //}
       this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
-      console.log(this.$parent.nextDirs[this.$parent.currentDir])
       this.$parent.turnContinue = true
     },
   },
 }
 </script>
 
-<style>
+<style lang="scss">
 .terminal {
   max-width: 700px;
   height: 250px;
@@ -236,19 +236,20 @@ export default {
   background: black;
   border: 2px solid white;
   border-radius: 4px;
-  text-align: left;
   overflow: auto;
-}
-.terminal > * {
-  color: white;
-}
-.inputField > input {
-  background: none;
-  color: white;
-  outline: 0;
-  border: none;
-}
-.inputField > span {
-  color: aqua;
+  * {
+    color: white;
+  }
+  .input-container {
+    span {
+      color: aqua;
+    }
+    input {
+      background: none;
+      color: white;
+      outline: 0;
+      border: none;
+    }
+  }
 }
 </style>

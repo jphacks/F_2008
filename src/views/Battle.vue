@@ -5,25 +5,29 @@
     <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" class="locateTheBattleScreen"/>
     <AppSpacer :height="36" />
     <!-- Note: バトルスクリーンの下にターミナルを表示する -->
+<<<<<<< HEAD
     <Terminal  class="locateTerminal"/>
     </div>
 
     <div class="rightScreen">
       <TheBattleHelp class="locateTheBattleHelp" />
     </div>
+=======
+    <TheTerminal />
+>>>>>>> 6809011371bc6ee715e38b0fc6a5b383141241a4
   </div>
 </template>
 
 <script>
 // Components
-import Terminal from '../components/Terminal.vue'
+import TheTerminal from '../components/TheTerminal.vue'
 import TheBattleScreen from '../components/TheBattleScreen.vue'
 import TheBattleHelp from '../components/TheBattleHelp.vue'
 import AppSpacer from '../components/AppSpacer.vue'
 
 export default {
   components: {
-    Terminal,
+    TheTerminal,
     TheBattleScreen,
     TheBattleHelp,
     AppSpacer,
@@ -71,9 +75,5 @@ export default {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
-  text-align: center;
-}
-.battle > h1 {
-  color: black;
 }
 </style>
