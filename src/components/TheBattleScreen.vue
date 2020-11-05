@@ -147,7 +147,7 @@ export default {
     }
     .hero-fields {
       display: flex;
-      flex-direction: row;      
+      flex-direction: row;
       align-items: center;
     }
   }
