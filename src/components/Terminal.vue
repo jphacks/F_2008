@@ -57,6 +57,7 @@ export default {
         var commandArg = parsedCommandsArray[1];
       }
       console.log(commandKind);
+      this.textInput = ''
       switch(commandKind){
         case 'source':
           this.source(commandArg);

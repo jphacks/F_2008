@@ -4,6 +4,7 @@
     <TheBattleScreen />
     <!-- Note: バトルスクリーンの下にターミナルを表示する -->
     <Terminal />
+    <TheBattleHelp />
   </div>
 </template>
 
@@ -11,11 +12,14 @@
 // Components
 import Terminal from '../components/Terminal.vue'
 import TheBattleScreen from '../components/TheBattleScreen.vue'
+import TheBattleHelp from '../components/TheBattleHelp.vue'
+
 
 export default {
   components: {
     Terminal,
     TheBattleScreen,
+    TheBattleHelp,
   },
   data() {
     return {
