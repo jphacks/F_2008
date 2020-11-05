@@ -55,6 +55,11 @@ export default {
       console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
+    _utilRandomRangeInt(minInt, maxInt){
+      //ゲームバランス調整用
+      //整数の範囲を指定してその中のランダムな整数を返す
+      return Math.floor(Math.random()*(maxInt-minInt)+minInt)
+    },
     runCommand() {
       var parsedCommandsArray = this.parseCommand(this.textInput)
       console.log(parsedCommandsArray)
@@ -68,6 +73,10 @@ export default {
       switch (commandKind) {
         case 'source':
           this.source(commandArg)
+          this.checkIfContinue()
+          break
+        case 'touch':
+          this.touch(commandArg)
           this.checkIfContinue()
           break
         case 'ls':
@@ -117,6 +126,20 @@ export default {
       }
       this.$parent.turnContinue = false
     },
+    touch(weaponName){
+      if (!this.$parent.armsKind.includes(weaponName)){
+        this.updateLines(`武器${weaponName}は作れません`)
+      }
+      else if (weaponName in this.$parent.armsPosition[this.$parent.currentDir]){
+        this.updateLines(`武器${weaponName}は既に存在しています`)
+      } else{
+        this.$parent.armsPosition[this.$parent.currentDir][weaponName] = this._utilRandomRangeInt(10,300)
+        this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
+        this.updateLines(`武器${weaponName}を作りました`)
+        this.$parent.turnContinue = false
+      }
+
+    },
     mkdir(dirName) {
       //FIX同名の場合はバグる
       this.$parent.nextDirs[this.$parent.currentDir].push(dirName)
@@ -143,7 +166,7 @@ export default {
           console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
           if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath) {
             this.$parent.currentDir = strPath
-            this.updateLines(strPath)
+            this.updateLines(`${this.$parent.currentDir}に移動しました`)
             return
           }
         }
