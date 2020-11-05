@@ -49,6 +49,7 @@ export default {
         spear: 250,
         hummer: 300,
       },
+      armsKind: ['sword', 'gun', 'rock', 'stick', 'spear', 'hummer'],
       armsPosition: {
         '~': { sword: 100, gun: 1000 },
         left: { rock: 200, stick: 10 },
@@ -61,7 +62,7 @@ export default {
         right: ['~'],
         home: ['~'],
       },
-      nextDirs: { '~': ['left', 'right'], home: ['~'] },
+      nextDirs: { '~': ['left', 'right'], home: ['~'], right: [], left: [] },
     }
   },
 }
