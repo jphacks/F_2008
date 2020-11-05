@@ -68,9 +68,9 @@ export default {
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
       }
-      console.log(commandKind)
+      console.log(commandKind);
       this.textInput = ''
-      switch (commandKind) {
+      switch(commandKind){
         case 'source':
           this.source(commandArg)
           this.checkIfContinue()
@@ -260,7 +260,7 @@ export default {
   border: 2px solid white;
   border-radius: 4px;
   overflow: auto;
-  * {
+.terminal > * {
     color: white;
   }
   .input-container {

@@ -1,10 +1,16 @@
 <template>
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
-    <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" />
-    <AppSpacer :height="36" />
-    <!-- Note: バトルスクリーンの下にターミナルを表示する -->
-    <TheTerminal />
+    <div class="leftScreen">
+      <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" class="locBattleScreen"/>
+      <AppSpacer :height="36" />
+      <!-- Note: バトルスクリーンの下にターミナルを表示する -->
+      <TheTerminal />
+    </div>
+
+    <div class="rightScreen">
+      <TheBattleHelp class="locTheBattleHelp" />
+    </div>
   </div>
 </template>
 
@@ -12,12 +18,14 @@
 // Components
 import TheTerminal from '../components/TheTerminal.vue'
 import TheBattleScreen from '../components/TheBattleScreen.vue'
+import TheBattleHelp from '../components/TheBattleHelp.vue'
 import AppSpacer from '../components/AppSpacer.vue'
 
 export default {
   components: {
     TheTerminal,
     TheBattleScreen,
+    TheBattleHelp,
     AppSpacer,
   },
   data() {
@@ -64,5 +72,18 @@ export default {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
+}
+.battle:after {
+  content: "";
+  display: block;
+  clear:both;
+}
+.rightScreen {
+  width: 30%;
+  float:left;
+}
+.leftScreen {
+  width: 70%;
+  float:left;
 }
 </style>
