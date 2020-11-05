@@ -3,10 +3,10 @@
     <!-- Note: GUI バトル画面 -->
     <div class="leftScreen">
       <TheBattleScreen
+        class="locBattleScreen"
         :myHp="myHp"
         :enemyHp="num"
-        :currentDir="currentDir"
-        class="locBattleScreen"
+        :currentDir="currentDir"        
       />
       <AppSpacer :height="36" />
       <!-- Note: バトルスクリーンの下にターミナルを表示する -->
@@ -49,14 +49,7 @@ export default {
         right: '~/right',
         home: '/home',
       },
-      arms: {
-        sword: 100,
-        gun: 1000,
-        rock: 200,
-        stick: 10,
-        spear: 250,
-        hummer: 300,
-      },
+
       armsKind: ['sword', 'gun', 'rock', 'stick', 'spear', 'hummer'],
       armsPosition: {
         '~': { sword: 100, gun: 1000 },

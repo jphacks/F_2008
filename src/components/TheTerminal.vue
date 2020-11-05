@@ -209,18 +209,22 @@ export default {
       let targetDir = rmPosition[rmIndex]
       this.updateLines(`Bossは'${targetDir}'以下のフォルダを攻撃した！`)
       if (targetDir == '~') {
+        //全体攻撃
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
         this.updateLines('Bossによってすべての武器が削除された!')
         this.$parent.armsPosition['~'] = {}
         this.$parent.armsPosition['left'] = {}
         this.$parent.armsPosition['right'] = {}
       } else if (targetDir == this.$parent.currentDir) {
+        //一部攻撃命中
         this.$parent.myHp -= bossRmDamage
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
         this.$parent.armsPosition[targetDir] = {}
         this.updateLines(`Bossによって${targetDir}の武器が削除された！`)
       } else {
-        this.updateLines('Bossの攻撃は外れた！')
+        this.updateLines(`Bossの攻撃はプレイヤーには当たらなかった！`) //武器にのみ命中
+        this.updateLines(`しかし${targetDir}の武器が破壊された!`)
+        this.$parent.armsPosition[targetDir] = {}
       }
 
       if (this.$parent.isEnemyTurn == false) {
