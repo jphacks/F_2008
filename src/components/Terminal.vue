@@ -1,14 +1,18 @@
 <template>
-  <div class="terminal">    
-    <p>parentbossHP:{{ $parent.num }}</p>
-    <p>myHp: {{ $parent.myHp }}</p>
-    <p>currentDir:{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</p>
-    <p>{{ textInput }}</p>
+  <!-- Note: テスト機能 -->
+  <!-- <button v-on:click="runCommand">runCommand</button>
+  <p>parentbossHP:{{ $parent.num }}</p>
+  <p>myHp: {{ $parent.myHp }}</p>
+  <p>currentDir:{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</p>
+  <p>{{ textInput }}</p> -->
+
+  <!-- Note: 実際の機能 -->
+  <div class="terminal">
     <div v-for="outputLine in outputLines" v-bind:key="outputLine">
       {{ outputLine }}
     </div>
     <div class="inputField">
-      <span>$</span>
+      <span>{{ $parent.currentPathForDisplay[$parent.currentDir] }}$</span>
       <input
         type="text"
         v-model="textInput"
@@ -17,8 +21,6 @@
         v-on:keyup.enter.exact="runCommand"
       />
     </div>
-
-    <button v-on:click="runCommand">runCommand</button>
   </div>
 </template>
 
@@ -31,10 +33,10 @@ export default {
     return {
       textInput: '',
       outputLines: [
-        'ここに',
-        'Terminalの画面に流す',
-        'Textを表示していく',
-        'あなたのターンです',
+        // 'ここに',
+        // 'Terminalの画面に流す',
+        // 'Textを表示していく',
+        // 'あなたのターンです',
       ],
       outputLinesMaxLimit: 10,
     }
@@ -241,11 +243,11 @@ export default {
 }
 .inputField > input {
   background: none;
-  color: white; 
+  color: white;
   outline: 0;
   border: none;
 }
-.inputField > span{
+.inputField > span {
   color: aqua;
 }
 </style>

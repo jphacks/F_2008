@@ -1,7 +1,7 @@
 <template>
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
-    <TheBattleScreen />
+    <TheBattleScreen :myHp="myHp" :enemyHp="num" :currentDir="currentDir" />
     <AppSpacer :height="36" />
     <!-- Note: バトルスクリーンの下にターミナルを表示する -->
     <Terminal />
