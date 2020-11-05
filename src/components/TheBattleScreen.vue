@@ -1,43 +1,51 @@
 <template>
   <div class="battle-screen">
-    <AppSpacer :height="140" />
+    <AppSpacer :height="170" />
     <div class="character-fields-contaier">
       <div class="hero-fields">
-        <AppCharacterField>
-          <img
-            v-show="positionLeft"
-            :class="{ characterImage: true, shivering: isMyShiverActivated }"
-            src="../assets/hero.png"
-            alt="Hero Image"
-          />
-        </AppCharacterField>
-        <AppCharacterField>
-          <img
-            v-show="positionCenter"
-            :class="{ characterImage: true, shivering: isMyShiverActivated }"
-            src="../assets/hero.png"
-            alt="Hero Image"
-          />
-        </AppCharacterField>
-        <AppCharacterField>
-          <img
-            v-show="positionRight"
-            :class="{ characterImage: true, shivering: isMyShiverActivated }"
-            src="../assets/hero.png"
-            alt="Hero Image"
-          />
-        </AppCharacterField>
+        <div class="root">
+          <AppCharacterField>
+            <img
+              v-show="positionCenter"
+              :class="{ characterImage: true, shivering: isMyShiverActivated }"
+              src="../assets/hero.png"
+              alt="Hero Image"
+            />
+          </AppCharacterField>
+        </div>
+        <div class="first-class">
+          <AppCharacterField>
+            <img
+              v-show="positionLeft"
+              :class="{ characterImage: true, shivering: isMyShiverActivated }"
+              src="../assets/hero.png"
+              alt="Hero Image"
+            />
+          </AppCharacterField>
+          <!-- <AppSpacer :height="20" /> -->
+          <AppCharacterField>
+            <img
+              v-show="positionRight"
+              :class="{ characterImage: true, shivering: isMyShiverActivated }"
+              src="../assets/hero.png"
+              alt="Hero Image"
+            />
+          </AppCharacterField>
+        </div>
       </div>
       <!-- Note: 敵キャラ -->
-      <AppCharacterField>
-        <img
-          :class="{ characterImage: true, shivering: isEnemyShiverActivated }"
-          src="../assets/B-Ghost.png"
-          alt="Ghost Image"
-        />
-      </AppCharacterField>
+      <img
+        :class="{
+          characterImage: true,
+          enemyImage: true,
+          shivering: isEnemyShiverActivated,
+        }"
+        src="../assets/B-Ghost.png"
+        alt="Ghost Image"
+      />
     </div>
     <!-- Note: バトルの情報 -->
+    <AppSpacer :height="30" />
     <TheBattleInfo :enemyHp="enemyHp" :myHp="myHp" />
   </div>
 </template>
@@ -128,17 +136,19 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    // Testing:
-    border: 1px solid black;
     .characterImage {
       width: 50px;
+    }
+    .enemyImage {
+      width: 80px;
     }
     .shivering {
       animation: Shivering 0.1s infinite;
     }
     .hero-fields {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;      
+      align-items: center;
     }
   }
 }

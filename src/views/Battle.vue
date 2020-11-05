@@ -6,7 +6,7 @@
         class="locBattleScreen"
         :myHp="myHp"
         :enemyHp="num"
-        :currentDir="currentDir"        
+        :currentDir="currentDir"
       />
       <AppSpacer :height="36" />
       <!-- Note: バトルスクリーンの下にターミナルを表示する -->
