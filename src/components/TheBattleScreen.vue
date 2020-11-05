@@ -1,55 +1,56 @@
 <template>
   <div class="battle-screen">
-    <div class="battle-screen__content">
+    <AppSpacer :height="140" />
+    <div class="character-fields-contaier">
       <div class="hero-fields">
-        <div class="left field">
+        <AppCharacterField>
           <img
             v-show="positionLeft"
-            class="hero-image"
+            class="character-image"
             src="../assets/hero.png"
             alt="Hero Image"
           />
-        </div>
-        <div class="center field">
+        </AppCharacterField>
+        <AppCharacterField>
           <img
             v-show="positionCenter"
-            class="hero-image"
+            class="character-image"
             src="../assets/hero.png"
             alt="Hero Image"
           />
-        </div>
-        <div class="right field">
+        </AppCharacterField>
+        <AppCharacterField>
           <img
             v-show="positionRight"
-            class="hero-image"
+            class="character-image"
             src="../assets/hero.png"
             alt="Hero Image"
           />
-        </div>
+        </AppCharacterField>
       </div>
-      <div class="enemy-field field">
+      <AppCharacterField>
         <img
-          class="ghost-image"
+          class="character-image"
           src="../assets/B-Ghost.png"
           alt="Ghost Image"
         />
-      </div>
-      <div class="battle-screen__information">
-        <div class="HP-enemy-field">
-          <div class="HP-box">
-            <h1 class="label">Enemy HP:</h1>
-            <span class="bar">
-              <span class="enemy" :style="enemyHpPer"></span>
-            </span>
-            <p>{{ enemyHp }}/10000</p>
-          </div>
-        </div>
-      </div>
+      </AppCharacterField>
     </div>
+    <!-- Note: バトルの情報 -->
+    <TheBattleInfo :enemyHp="enemyHp" :myHp="myHp" />
   </div>
 </template>
 <script>
+// Componetns
+import AppSpacer from '../components/AppSpacer.vue'
+import AppCharacterField from '../components/AppCharacterField.vue'
+import TheBattleInfo from '../components/TheBattleInfo.vue'
 export default {
+  components: {
+    AppSpacer,
+    AppCharacterField,
+    TheBattleInfo,
+  },
   props: {
     enemyHp: {
       type: Number,
@@ -62,11 +63,6 @@ export default {
     },
   },
   computed: {
-    enemyHpPer() {
-      return {
-        '--width': String(Math.floor(this.enemyHp / 100)) + '%',
-      }
-    },
     positionLeft() {
       return this.currentDir === 'left'
     },
@@ -82,68 +78,25 @@ export default {
 <style lang="scss">
 .battle-screen {
   max-width: 800px;
-  min-height: 400px;
+  height: 400px;
   margin: auto;
-  position: relative;
   background-image: url('../assets/backgroud_glass.png');
   background-size: cover;
-  img {
-    width: 50px;
-  }
-  .battle-screen__content {
-    position: absolute;
-    bottom: 0;
+  .character-fields-contaier {
     width: 100%;
     height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    // Testing:
     border: 1px solid black;
-    .field {
+    .character-image {
       width: 50px;
-      height: 50px;
-      border: 1px solid black;
-      /* background: url("../assets/field-shadow.png"); */
-      /* background-size: cover; */
     }
     .hero-fields {
-      position: absolute;
-      bottom: 100px;
-      left: 200px;
       display: flex;
       flex-direction: column;
-    }
-    .enemy-field {
-      position: absolute;
-      bottom: 100px;
-      right: 200px;
-    }
-    .battle-screen__information {
-      // background: black;
-      .HP-box {
-        display: inline-block;
-        .label,
-        .bar {
-          display: inline-block;
-        }
-        .bar {
-          width: 100px;
-          height: 6px;
-          margin-bottom: 7px;
-          background: #353b48;
-          border: 1px solid rgba(0, 0, 0, 0.3);
-          border-radius: 3px;
-          box-shadow: 0 0 10px #2187e7b3;
-          overflow: hidden;
-          span {
-            height: 6px;
-            float: left;
-            background: #2187e7;
-          }
-          .enemy {
-            --width: 100%;
-            width: var(--width);
-            transition-duration: 2s;
-          }
-        }
-      }
     }
   }
 }
