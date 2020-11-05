@@ -68,6 +68,11 @@ export default {
       console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
+    _utilRandomRangeInt(minInt, maxInt){
+      //ゲームバランス調整用
+      //整数の範囲を指定してその中のランダムな整数を返す
+      return Math.floor(Math.random()*(maxInt-minInt)+minInt)
+    },
     runCommand() {
       var parsedCommandsArray = this.parseCommand(this.textInput)
       console.log(parsedCommandsArray)
@@ -141,7 +146,7 @@ export default {
       else if (weaponName in this.$parent.armsPosition[this.$parent.currentDir]){
         this.updateLines(`武器${weaponName}は既に存在しています`)
       } else{
-        this.$parent.armsPosition[this.$parent.currentDir][weaponName] = 123
+        this.$parent.armsPosition[this.$parent.currentDir][weaponName] = this._utilRandomRangeInt(10,300)
         this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
         this.updateLines(`武器${weaponName}を作りました`)
         this.$parent.turnContinue = false
