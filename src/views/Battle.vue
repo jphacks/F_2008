@@ -41,11 +41,11 @@ export default {
         spear: 250,
         hummer: 300,
       },
-      armsKind : ['sword','gun','rock','stick','spear','hummer'],
+      armsKind: ['sword', 'gun', 'rock', 'stick', 'spear', 'hummer'],
       armsPosition: {
         '~': { sword: 100, gun: 1000 },
-        'left': { rock: 200, stick: 10 },
-        'right': { spear: 250, hummer: 300 },
+        left: { rock: 200, stick: 10 },
+        right: { spear: 250, hummer: 300 },
       },
       parentDir: { '~': 'home', left: '~', right: '~' },
       linkedDirs: {
@@ -54,7 +54,7 @@ export default {
         right: ['~'],
         home: ['~'],
       },
-      nextDirs: { '~': ['left', 'right'], home: ['~'],'right':[],'left':[] },
+      nextDirs: { '~': ['left', 'right'], home: ['~'], right: [], left: [] },
     }
   },
 }
