@@ -21,7 +21,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'terminal',
   data() {
@@ -55,22 +54,22 @@ export default {
       console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
-    _utilRandomRangeInt(minInt, maxInt){
+    _utilRandomRangeInt(minInt, maxInt) {
       //ゲームバランス調整用
       //minInt以上maxInt未満の整数を等確率で返す
-      return Math.floor(Math.random()*(maxInt-minInt)+minInt)
+      return Math.floor(Math.random() * (maxInt - minInt) + minInt)
     },
     runCommand() {
       var parsedCommandsArray = this.parseCommand(this.textInput)
       console.log(parsedCommandsArray)
-      this.updateLines(this.textInput)
+      commandArg = this.updateLines(this.textInput)
       var commandKind = parsedCommandsArray[0]
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
       }
-      console.log(commandKind);
+      console.log(commandKind)
       this.textInput = ''
-      switch(commandKind){
+      switch (commandKind) {
         case 'source':
           this.source(commandArg)
           this.checkIfContinue()
@@ -126,19 +125,21 @@ export default {
       }
       this.$parent.turnContinue = false
     },
-    touch(weaponName){
-      if (!this.$parent.armsKind.includes(weaponName)){
+    touch(weaponName) {
+      if (!this.$parent.armsKind.includes(weaponName)) {
         this.updateLines(`武器${weaponName}は作れません`)
-      }
-      else if (weaponName in this.$parent.armsPosition[this.$parent.currentDir]){
+      } else if (
+        weaponName in this.$parent.armsPosition[this.$parent.currentDir]
+      ) {
         this.updateLines(`武器${weaponName}は既に存在しています`)
-      } else{
-        this.$parent.armsPosition[this.$parent.currentDir][weaponName] = this._utilRandomRangeInt(10,300)
+      } else {
+        this.$parent.armsPosition[this.$parent.currentDir][
+          weaponName
+        ] = this._utilRandomRangeInt(10, 300)
         this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
         this.updateLines(`武器${weaponName}を作りました`)
         this.$parent.turnContinue = false
       }
-
     },
     mkdir(dirName) {
       //FIX同名の場合はバグる
@@ -203,23 +204,28 @@ export default {
       //~が攻撃される確率をへらすためにrmPositionnにright とleftを増やしています
       let rmPosition = ['~', 'right', 'right', 'right', 'left', 'left', 'left']
       //let rmPosition = ['~','right','left']
-      let rmIndex = this._utilRandomRangeInt(0,rmPosition.length)
-      let bossRmDamage = this._utilRandomRangeInt(100,300)
+      let rmIndex = this._utilRandomRangeInt(0, rmPosition.length)
+      let bossRmDamage = this._utilRandomRangeInt(100, 300)
       let targetDir = rmPosition[rmIndex]
       this.updateLines(`Bossは'${targetDir}'以下のフォルダを攻撃した！`)
       if (targetDir == '~') {
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+        this.updateLines('Bossによってすべての武器が削除された!')
+        this.$parent.armsPosition['~'] = {}
+        this.$parent.armsPosition['left'] = {}
+        this.$parent.armsPosition['right'] = {}
       } else if (targetDir == this.$parent.currentDir) {
         this.$parent.myHp -= bossRmDamage
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
+        this.$parent.armsPosition[targetDir] = {}
+        this.updateLines(`Bossによって${targetDir}の武器が削除された！`)
       } else {
         this.updateLines('Bossの攻撃は外れた！')
       }
 
-      if (this.$parent.isEnemyTurn == false){
+      if (this.$parent.isEnemyTurn == false) {
         this.updateLines('rmが敵のターンでないのに実行されてます')
       }
-
     },
     changeTurnToPlayer() {
       if (this.$parent.myHp <= 0) {

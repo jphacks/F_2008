@@ -80,7 +80,7 @@ export default {
     },
   },
   watch: {
-    myHp() { 
+    myHp() {
       // Note: ダメージエフェクト
       this.isMyShiverActivated = true
       setTimeout(() => {
