@@ -273,6 +273,13 @@ export default {
         this.$parent.num = 0
         this.updateLines('あなたの勝利です!')
         //TODO ここで勝利ページへ移行
+        this.$router.push({
+          name: 'Result',
+          query: {
+            isWin: true,
+            usedCommandsArray: this.usedCommandsArray,
+          },
+        })
       } else if (this.$parent.num > 0) {
         //ここにログ追加
         let newLogObject = {
@@ -334,6 +341,13 @@ export default {
         this.$parent.myHp = 0
         this.updateLines('あなたの敗北です')
         //TODO ここで敗北ページへ移行
+        this.$router.push({
+          name: 'Result',
+          query: {
+            isWin: false,
+            usedCommandsArray: this.usedCommandsArray,
+          },
+        })
       } else if (this.$parent.myHp > 0) {
         this.updateLines('あなたのターンです')
         this.$parent.isEnemyTurn = false

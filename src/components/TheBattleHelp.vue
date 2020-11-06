@@ -67,8 +67,9 @@ export default {
 </script>
 <style>
 .battleHelp {
-  max-width: 400px;
-  height: auto;
+  max-width: 300px;
+  height: 700px;
+  overflow: auto;
   margin: auto;
   padding: 4px;
   background: #191970;
