@@ -213,9 +213,13 @@ export default {
       } else if (strPath === '.') {
         return
       } else if (strPath === '..') {
+        if (this.$parent.currentDir === 'home') {
+          return
+        } else {
         this.$parent.currentDir = this.$parent.parentDir[
           this.$parent.currentDir
         ]
+        }
       } else {
         //今いるディレクトリにつながっているディレクトリを全てチェックしている
         for (
