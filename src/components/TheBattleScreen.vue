@@ -100,6 +100,7 @@ export default {
     return {
       isEnemyShiverActivated: false,
       isMyShiverActivated: false,
+
       weapons: [
         { name: 'gun', src: require('@/assets/gun.png') },
         { name: 'sword', src: require('@/assets/sword.png') },
@@ -172,6 +173,7 @@ export default {
   margin: auto;
   background-image: url('../assets/backgroud_glass.png');
   background-size: cover;
+  position: relative;
   .character-fields-contaier {
     width: 100%;
     height: fit-content;
