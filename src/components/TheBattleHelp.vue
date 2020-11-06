@@ -66,7 +66,7 @@ export default {
   height: auto;
   margin: auto;
   padding: 4px;
-  background: black;
+  background: #191970;
   border: 2px solid white;
   border-radius: 4px;
   text-align: left;
