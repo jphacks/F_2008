@@ -23,5 +23,7 @@ export default {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
+  display: flex;
+  justify-content: center;
 }
 </style>
