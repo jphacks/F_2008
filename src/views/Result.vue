@@ -1,7 +1,5 @@
 <template>
-<div class="Result">
   <TheResult />
-</div>
 </template>
 
 <script>
@@ -19,9 +17,4 @@ export default {
 }
 </script>
 <style>
-.Result {
-  width: 100%;
-  min-height: 100vh;
-  background: #181a1b;
-}
 </style>
