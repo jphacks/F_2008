@@ -123,10 +123,6 @@ export default {
         parsedCommandsArray
       ) //入力コマンドはここでログに格納
       console.log(parsedCommandsArray)
-<<<<<<< HEAD
-      commandArg = this.updateLines(this.textInput)
-=======
->>>>>>> db2741ca40c544e49ded1c1c4b21c4dc698cc6e0
       var commandKind = parsedCommandsArray[0]
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
@@ -193,10 +189,12 @@ export default {
     touch(weaponName) {
       if (!this.$parent.armsKind.includes(weaponName)) {
         this.updateLines(`武器${weaponName}は作れません`)
+        //何なら作れますって言ってほしい
       } else if (
         weaponName in this.$parent.armsPosition[this.$parent.currentDir]
       ) {
         this.updateLines(`武器${weaponName}は既に存在しています`)
+        //何なら作れますって言ってほしい
       } else {
         this.$parent.armsPosition[this.$parent.currentDir][
           weaponName
