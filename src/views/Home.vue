@@ -4,20 +4,31 @@
     <h1 class="title">Terminal RPG</h1>
     <AppSpacer :height="230" />
     <AppBlueButton>
-      <router-link to="/battle">Battle</router-link>
+      <router-link to="/battle">START GAME</router-link>
     </AppBlueButton>
+    <AppSpacer :height="30" />
+    <AppButton>
+      <a>OPTIONS</a>
+    </AppButton>
+    <AppSpacer :height="30" />
+    <div class="sample__container">
+      <p>@2020</p>
+      <p>yasukawa kouno</p>
+    </div>    
   </div>
 </template>
 
 <script>
 import AppSpacer from '../components/AppSpacer.vue'
 import AppBlueButton from '../components/AppBlueButton.vue'
+import AppButton from '../components/AppButton.vue'
 
 export default {
   name: 'Home',
   components: {
     AppSpacer,
     AppBlueButton,
+    AppButton
   },
 }
 </script>
@@ -25,7 +36,8 @@ export default {
 .home {
   width: 100%;
   min-height: 100vh;
-  background-image: url('../assets/homepage-background.png');
+  background: #181a1b;
+  // background-image: url('../assets/homepage-background.png');
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -33,5 +45,12 @@ export default {
   .title {
     font-size: 38px;
   }
+}
+.sample__container {
+  * {
+    color: white;  
+    font-size: 26px;
+  }
+  
 }
 </style>
