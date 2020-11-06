@@ -1,8 +1,4 @@
 <template>
-
-<h1 class="sample">
-  {{ usedCommands }}
-</h1>
 <div class="resultBackground">
   <div v-show="isWin" class="TheResult">
     <div class="resultTop">
@@ -151,8 +147,5 @@ export default {
 
 .TheResult > * {
   color: white;
-}
-.sample{
-  color: red;
 }
 </style>

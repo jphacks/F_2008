@@ -1,5 +1,4 @@
 <template>
-  <button @click="goResultPage">go result</button>
   <div class="terminal">    
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
