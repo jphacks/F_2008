@@ -70,7 +70,7 @@ export default {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
-  padding:40px;
+  padding: 40px;
 }
 .battle:after {
   content: '';

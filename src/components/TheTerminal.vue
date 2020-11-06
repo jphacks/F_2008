@@ -1,5 +1,5 @@
 <template>
-  <div class="terminal">    
+  <div class="terminal">
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
       <template
@@ -76,8 +76,11 @@ export default {
   },
   methods: {
     goResultPage() {
-      this.$router.push({name: "Result", query: {  usedCommandsArray: this.usedCommandsArray}})
-    },    
+      this.$router.push({
+        name: 'Result',
+        query: { usedCommandsArray: this.usedCommandsArray },
+      })
+    },
     updateLines(newLine) {
       //TODO これの追加先が配列outputLinesからLogObjectの末尾の配列に変わればok
       //端末の出力を書き換えたい時はこれを使う実行する
@@ -270,6 +273,13 @@ export default {
         this.$parent.num = 0
         this.updateLines('あなたの勝利です!')
         //TODO ここで勝利ページへ移行
+        this.$router.push({
+          name: 'Result',
+          query: {
+            isWin: true,
+            usedCommandsArray: this.usedCommandsArray,
+          },
+        })
       } else if (this.$parent.num > 0) {
         //ここにログ追加
         let newLogObject = {
@@ -331,6 +341,13 @@ export default {
         this.$parent.myHp = 0
         this.updateLines('あなたの敗北です')
         //TODO ここで敗北ページへ移行
+        this.$router.push({
+          name: 'Result',
+          query: {
+            isWin: false,
+            usedCommandsArray: this.usedCommandsArray,
+          },
+        })
       } else if (this.$parent.myHp > 0) {
         this.updateLines('あなたのターンです')
         this.$parent.isEnemyTurn = false

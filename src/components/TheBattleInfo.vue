@@ -84,8 +84,8 @@ export default {
       text-align: right;
       .hp__fraction {
         font-family: 'M PLUS Rounded 1c';
-        font-size:20px;
-        }
+        font-size: 20px;
+      }
       .hp__bar {
         display: inline-block;
         width: 100px;
