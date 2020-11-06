@@ -3,6 +3,7 @@
 [![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
 
 ## 製品概要
+やってみると簡単だけど取っつきが難しそうなUNIXコマンドをゲーム感覚で知ってもらうプログラミング初学者に向けたwebアプリケーションです。コマンドでの操作をGUI
 ### 背景(製品開発のきっかけ、課題等）
 ### 製品説明（具体的な製品の説明）
 ### 特長
