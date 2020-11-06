@@ -16,10 +16,10 @@ const routes = [
     component: Battle,
   },
   {
-    path:'/result',
+    path: '/result',
     name: 'Result',
     component: Result,
-  }
+  },
 ]
 
 const router = createRouter({

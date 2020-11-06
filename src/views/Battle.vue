@@ -17,7 +17,6 @@
       <TheBattleHelp class="locTheBattleHelp" />
     </div>
   </div>
-  <TheVictory />
 </template>
 
 <script>
@@ -26,7 +25,6 @@ import TheTerminal from '../components/TheTerminal.vue'
 import TheBattleScreen from '../components/TheBattleScreen.vue'
 import TheBattleHelp from '../components/TheBattleHelp.vue'
 import AppSpacer from '../components/AppSpacer.vue'
-import TheVictory from '../components/AppSpacer.vue'
 
 export default {
   components: {
@@ -34,7 +32,6 @@ export default {
     TheBattleScreen,
     TheBattleHelp,
     AppSpacer,
-    TheVictory,
   },
   data() {
     return {

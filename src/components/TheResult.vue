@@ -13,10 +13,14 @@
       {{ resultCommand }}
     </p>
   </div>
+  <div class="TheDefeat">
+    <h1>You Lose!</h1>
+    <p>残念ながらあなたは負けてしまいました。</p>
+  </div>
 </template>
 <script>
 export default {
-  name: 'TheVictory',
+  name: 'TheResult',
   data() {
     return {
       resultCommands: ['cd', 'ls', 'touch', 'rm', 'source'],
@@ -29,8 +33,6 @@ export default {
       },
     }
   },
-  components: {},
-  methods: {},
 }
 </script>
 <style>
