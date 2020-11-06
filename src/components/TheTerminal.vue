@@ -2,7 +2,10 @@
   <div class="terminal">
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
-      <template v-for="outputObject in this.outputObjects" v-bind:key="outputObject">
+      <template
+        v-for="outputObject in this.outputObjects"
+        v-bind:key="outputObject"
+      >
         <div v-if="outputObject._inputCommand">
           <span class="output__dir">
             {{ $parent.currentPathForDisplay[outputObject._commandDir] }}$

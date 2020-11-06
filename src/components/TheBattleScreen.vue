@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       isEnemyShiverActivated: false,
-      isMyShiverActivated: false
+      isMyShiverActivated: false,
     }
   },
   computed: {
@@ -130,6 +130,7 @@ export default {
   margin: auto;
   background-image: url('../assets/backgroud_glass.png');
   background-size: cover;
+  position: relative;
   .character-fields-contaier {
     width: 100%;
     height: fit-content;
