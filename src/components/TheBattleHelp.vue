@@ -50,6 +50,12 @@ export default {
             '自分がいる位置にフォルダを作る事ができます。~（一番上の階層のフォルダの名前）の下にフォルダを作ることで、敵の攻撃が当たる可能性を低くできるかも...',
           example: 'mkdir hoge',
         },
+        {
+          name: 'touch',
+          comment:
+            '武器(sword, rock, stick, hummer, gun, spear)の生成ができる',
+          example: 'touch sword'
+        },
       ],
       //ないほうが見通しがいいような気もする
       description:
