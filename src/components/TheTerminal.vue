@@ -2,28 +2,23 @@
   <div class="terminal">
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
-      <div v-for="outputObject in this.outputObjects" v-bind:key="outputObject">
+      <template v-for="outputObject in this.outputObjects" v-bind:key="outputObject">
         <div v-if="outputObject._inputCommand">
-          <span
-            >Yusya@World :{{
-              $parent.currentPathForDisplay[outputObject._commandDir]
-            }}$
+          <span class="output__dir">
+            {{ $parent.currentPathForDisplay[outputObject._commandDir] }}$
           </span>
           <span>{{ outputObject._inputCommand }}</span>
         </div>
 
-        <div v-if="outputObject._hasOutputLines">
-          <div
+        <template v-if="outputObject._hasOutputLines">
+          <p
             v-for="_outputline in outputObject._outputlines"
             v-bind:key="_outputline"
           >
-            <span></span>
-            <span>{{ _outputline }}</span>
-          </div>
-        </div>
-
-        <p>-------------------------</p>
-      </div>
+            {{ _outputline }}
+          </p>
+        </template>
+      </template>
     </div>
     <!-- Note:  入力関係をまとめたコンテイナー -->
     <div class="input-container">
@@ -46,31 +41,31 @@ export default {
     return {
       textInput: '',
       outputObjects: [
-        {
-          _inputCommand: 'inputだけだよ',
-          _hasInputCommand: true,
-          _commandDir: '~',
-          _hasOutputLines: false,
-          _outputlines: [],
-        },
-        {
-          _inputCommand: '',
-          _hasInputCommand: false,
-          _commandDir: '~',
-          _hasOutputLines: true,
-          _outputlines: [
-            '一行だと見にくいログ（敵の攻撃によるログ）は',
-            'このように複数の行にまたがって',
-            '描画していくよ',
-          ],
-        },
-        {
-          _inputCommand: 'ls',
-          _hasInputCommand: true,
-          _commandDir: '~',
-          _hasOutputLines: true,
-          _outputlines: ['left right center sword stick konna kanji nisuru'],
-        },
+        // {
+        //   _inputCommand: 'inputだけだよ',
+        //   _hasInputCommand: true,
+        //   _commandDir: '~',
+        //   _hasOutputLines: false,
+        //   _outputlines: [],
+        // },
+        // {
+        //   _inputCommand: '',
+        //   _hasInputCommand: false,
+        //   _commandDir: '~',
+        //   _hasOutputLines: true,
+        //   _outputlines: [
+        //     '一行だと見にくいログ（敵の攻撃によるログ）は',
+        //     'このように複数の行にまたがって',
+        //     '描画していくよ',
+        //   ],
+        // },
+        // {
+        //   _inputCommand: 'ls',
+        //   _hasInputCommand: true,
+        //   _commandDir: '~',
+        //   _hasOutputLines: true,
+        //   _outputlines: ['left right center sword stick konna kanji nisuru'],
+        // },
       ],
       outputLinesMaxLimit: 10,
     }
@@ -336,6 +331,11 @@ export default {
   overflow: auto;
   * {
     color: white;
+  }
+  .outputs-container {
+    .output__dir {
+      color: aqua;
+    }
   }
   .input-container {
     span {

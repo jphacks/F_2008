@@ -74,6 +74,7 @@ export default {
   data() {
     return {
       isEnemyShiverActivated: false,
+      isMyShiverActivated: false
     }
   },
   computed: {
@@ -147,7 +148,7 @@ export default {
     }
     .hero-fields {
       display: flex;
-      flex-direction: row;      
+      flex-direction: row;
       align-items: center;
     }
   }
