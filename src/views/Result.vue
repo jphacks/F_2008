@@ -152,4 +152,7 @@ export default {
 .TheResult > * {
   color: white;
 }
+.sample{
+  color: red;
+}
 </style>
