@@ -2,7 +2,10 @@
   <div class="terminal">
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
-      <template v-for="outputObject in this.outputObjects" v-bind:key="outputObject">
+      <template
+        v-for="outputObject in this.outputObjects"
+        v-bind:key="outputObject"
+      >
         <div v-if="outputObject._inputCommand">
           <span class="output__dir">
             {{ $parent.currentPathForDisplay[outputObject._commandDir] }}$
@@ -188,6 +191,11 @@ export default {
         weaponName in this.$parent.armsPosition[this.$parent.currentDir]
       ) {
         this.updateLines(`武器${weaponName}は既に存在しています`)
+      } else if (
+        Object.keys(this.$parent.armsPosition[this.$parent.currentDir])
+          .length >= 4
+      ) {
+        this.updateLines(`武器は4つまでしか作れません`)
       } else {
         this.$parent.armsPosition[this.$parent.currentDir][
           weaponName
