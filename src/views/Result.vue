@@ -1,5 +1,9 @@
 <template>
-  <TheResult />
+
+  <div class="Result">
+    <TheResult />
+  </div>
+
 </template>
 
 <script>

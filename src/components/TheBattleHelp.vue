@@ -3,7 +3,7 @@
     <!-- <h3>ゲーム説明</h3><br>
     <p>{{ description }}</p><br> -->
     <h3>コマンド説明</h3>
-    <br>
+    <br />
     <p>--------------------------</p>
     <div v-for="command in commands" v-bind:key="command">
       <p>

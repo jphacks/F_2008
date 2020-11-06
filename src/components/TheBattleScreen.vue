@@ -1,6 +1,6 @@
 <template>
   <div class="battle-screen">
-    <AppSpacer :height="170" />
+    <AppSpacer :height="140" />
     <div class="character-fields-contaier">
       <div class="hero-fields">
         <div class="root">
@@ -11,14 +11,15 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
-
-            <div v-for="weapon in weapons" :key="weapon">
-              <img
-                v-if="checkDirHasWeapon('~', weapon.name)"
-                :src="weapon.src"
-                :class="{ characterImage: true }"
-                alt="center weapons"
-              />
+            <div class="weapons-container">
+              <template v-for="weapon in weapons" :key="weapon">
+                <div
+                  class="weapon-field"
+                  v-if="checkDirHasWeapon('~', weapon.name)"
+                >
+                  <img :src="weapon.src" alt="center weapons" />
+                </div>
+              </template>
             </div>
           </AppCharacterField>
         </div>
@@ -30,16 +31,18 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
-            <div v-for="weapon in weapons" :key="weapon">
-              <img
-                v-if="checkDirHasWeapon('left', weapon.name)"
-                :src="weapon.src"
-                :class="{ characterImage: true }"
-                alt="left weapons"
-              />
+          <div class="weapons-container">
+              <template v-for="weapon in weapons" :key="weapon">
+                <div
+                  class="weapon-field"
+                  v-if="checkDirHasWeapon('left', weapon.name)"
+                >
+                  <img :src="weapon.src" alt="center weapons" />
+                </div>
+              </template>
             </div>
           </AppCharacterField>
-          <!-- <AppSpacer :height="20" /> -->
+          <AppSpacer :height="20" />
           <AppCharacterField>
             <img
               v-show="positionRight"
@@ -47,13 +50,15 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
-            <div v-for="weapon in weapons" :key="weapon">
-              <img
-                v-if="checkDirHasWeapon('right', weapon.name)"
-                :src="weapon.src"
-                :class="{ characterImage: true }"
-                alt="right weapons"
-              />
+            <div class="weapons-container">
+              <template v-for="weapon in weapons" :key="weapon">
+                <div
+                  class="weapon-field"
+                  v-if="checkDirHasWeapon('right', weapon.name)"
+                >
+                  <img :src="weapon.src" alt="center weapons" />
+                </div>
+              </template>
             </div>
           </AppCharacterField>
         </div>
@@ -181,6 +186,9 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    .root{
+      padding-right: 16px;
+    }
     .characterImage {
       width: 50px;
     }
