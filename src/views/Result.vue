@@ -1,4 +1,9 @@
 <template>
+<<<<<<< HEAD
+
+<h1 class="sample">
+  {{ usedCommands }}
+</h1>
 <div class="resultBackground">
   <div v-show="isWin" class="TheResult">
     <div class="resultTop">
@@ -43,6 +48,15 @@
     </div>
   </div>
 </div>
+=======
+  <h1 class="sample">
+    {{ usedCommands }}
+  </h1>
+  <div class="Result">
+    <TheResult />
+  </div>
+   
+>>>>>>> 3277791e8995db420bc0ee5a310572a3f16c1894
 </template>
 <script>
 export default {
@@ -98,6 +112,9 @@ export default {
       ],
     }
   },
+  created() {    
+    this.usedCommands = this.$route.query.usedCommandsArray
+  },
   methods: {
     judgeUnusedCommands: function() {
       let unUsed = []
@@ -110,8 +127,12 @@ export default {
     },
   }
 }
+
 </script>
 <style>
+.sample{
+  color: red;
+}
 .resultBackground {
   padding-top:40px;
   width: 100%;

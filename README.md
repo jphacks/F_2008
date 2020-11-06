@@ -1,6 +1,6 @@
 # terminal-rpg-2
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
+![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/61449596/98368730-25ab9480-207b-11eb-9010-fbeb7486146c.png)
 
 <h1>製品概要</h1>
     <p>やってみると簡単だけど取っつきが難しそうなUNIXコマンドをゲーム感覚で知ってもらうプログラミング初学者に向けたwebアプリケーションです。</p>
@@ -26,7 +26,7 @@
 <h2>製品説明（具体的な製品の説明）</h2>
     <p>コマンドを使って敵と戦うRPGです。</p>
     <p>Terminal-RPGで使うコマンドは端末で使うコマンドの機能に似せており、まずはTerminal-RPGを通してコマンドの機能を直観的に理解してもらうことで実際の端末でコマンドを扱う際にコマンドの理解を早められる。</p>
-    <p>画像</p>
+    <img src='https://user-images.githubusercontent.com/61449596/98369496-622bc000-207c-11eb-8a6a-519a25585341.png'>
 
 <h2>特長</h2>
 <ul>
