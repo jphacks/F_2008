@@ -78,9 +78,14 @@ export default {
       display: inline-block;
       margin-right: 4px;
       font-size: 24px;
+      font-family: 'M PLUS Rounded 1c';
     }
     .hp-gauge {
       text-align: right;
+      .hp__fraction {
+        font-family: 'M PLUS Rounded 1c';
+        font-size:20px;
+        }
       .hp__bar {
         display: inline-block;
         width: 100px;
