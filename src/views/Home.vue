@@ -1,8 +1,11 @@
 <template>
   <div class="home">
-    <AppSpacer :height="50" />
-    <h1 class="title">Terminal RPG</h1>
     <AppSpacer :height="230" />
+    <div class="sample__container">
+      <img src="../assets/app_logo.png" alt="" />
+      <p>@2020</p>
+      <p>yasukawa kouno</p>
+    </div>
     <AppBlueButton>
       <router-link to="/battle">START GAME</router-link>
     </AppBlueButton>
@@ -10,11 +13,6 @@
     <AppButton>
       <a>OPTIONS</a>
     </AppButton>
-    <AppSpacer :height="30" />
-    <div class="sample__container">
-      <p>@2020</p>
-      <p>yasukawa kouno</p>
-    </div>    
   </div>
 </template>
 
@@ -28,7 +26,7 @@ export default {
   components: {
     AppSpacer,
     AppBlueButton,
-    AppButton
+    AppButton,
   },
 }
 </script>
@@ -48,9 +46,11 @@ export default {
 }
 .sample__container {
   * {
-    color: white;  
+    color: white;
     font-size: 26px;
   }
-  
+  img {
+    height: 40px;
+  }
 }
 </style>
