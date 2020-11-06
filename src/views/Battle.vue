@@ -1,21 +1,37 @@
 <template>
   <div class="battle">
     <!-- Note: GUI バトル画面 -->
-    <TheBattleScreen />
-    <!-- Note: バトルスクリーンの下にターミナルを表示する -->
-    <Terminal />
+    <div class="leftScreen">
+      <TheBattleScreen
+        class="locBattleScreen"
+        :myHp="myHp"
+        :enemyHp="num"
+        :currentDir="currentDir"
+      />
+      <AppSpacer :height="36" />
+      <!-- Note: バトルスクリーンの下にターミナルを表示する -->
+      <TheTerminal />
+    </div>
+
+    <div class="rightScreen">
+      <TheBattleHelp class="locTheBattleHelp" />
+    </div>
   </div>
 </template>
 
 <script>
 // Components
-import Terminal from '../components/Terminal.vue'
+import TheTerminal from '../components/TheTerminal.vue'
 import TheBattleScreen from '../components/TheBattleScreen.vue'
+import TheBattleHelp from '../components/TheBattleHelp.vue'
+import AppSpacer from '../components/AppSpacer.vue'
 
 export default {
   components: {
-    Terminal,
+    TheTerminal,
     TheBattleScreen,
+    TheBattleHelp,
+    AppSpacer,
   },
   data() {
     return {
@@ -30,6 +46,13 @@ export default {
         right: '~/right',
         home: '/home',
       },
+
+      armsKind: ['sword', 'gun', 'rock', 'stick', 'spear', 'hummer'],
+      armsPosition: {
+        '~': { sword: 100, gun: 1000 },
+        left: { rock: 200, stick: 10 },
+        right: { spear: 250, hummer: 300 },
+      },
       parentDir: { '~': 'home', left: '~', right: '~' },
       linkedDirs: {
         '~': ['left', '~', 'right'],
@@ -37,7 +60,7 @@ export default {
         right: ['~'],
         home: ['~'],
       },
-      nextDirs: { '~': ['left', 'right'], home: ['~'] },
+      nextDirs: { '~': ['left', 'right'], home: ['~'], right: [], left: [] },
     }
   },
 }
@@ -47,9 +70,18 @@ export default {
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
-  text-align: center;
 }
-.battle > h1 {
-  color: black;
+.battle:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.rightScreen {
+  width: 30%;
+  float: left;
+}
+.leftScreen {
+  width: 70%;
+  float: left;
 }
 </style>
