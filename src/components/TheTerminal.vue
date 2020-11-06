@@ -200,6 +200,7 @@ export default {
     touch(weaponName) {
       if (!this.$parent.armsKind.includes(weaponName)) {
         this.updateLines(`武器${weaponName}は作れません`)
+        //何なら作れますって言ってほしい
       } else if (
         weaponName in this.$parent.armsPosition[this.$parent.currentDir]
       ) {
@@ -302,16 +303,16 @@ export default {
       if (targetDir == '~') {
         //全体攻撃
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
-        this.updateLines(`全ての武器が破壊された!`)
-        this.$parent.armsPosition['~'] = {} //武器破壊
-        this.$parent.armsPosition['right'] = {}
+        this.updateLines('Bossによってすべての武器が削除された!')
+        this.$parent.armsPosition['~'] = {}
         this.$parent.armsPosition['left'] = {}
+        this.$parent.armsPosition['right'] = {}
       } else if (targetDir == this.$parent.currentDir) {
         //一部攻撃命中
         this.$parent.myHp -= bossRmDamage
         this.updateLines(`playerに${bossRmDamage}のダメージ！`)
         this.$parent.armsPosition[targetDir] = {}
-        this.updateLines(`${targetDir}の武器が破壊された!`)
+        this.updateLines(`Bossによって${targetDir}の武器が削除された！`)
       } else {
         this.updateLines(`Bossの攻撃はプレイヤーには当たらなかった！`) //武器にのみ命中
         this.updateLines(`しかし${targetDir}の武器が破壊された!`)
