@@ -31,7 +31,7 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
-          <div class="weapons-container">
+            <div class="weapons-container">
               <template v-for="weapon in weapons" :key="weapon">
                 <div
                   class="weapon-field"
@@ -186,7 +186,7 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    .root{
+    .root {
       padding-right: 16px;
     }
     .characterImage {

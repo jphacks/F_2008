@@ -52,9 +52,8 @@ export default {
         },
         {
           name: 'touch',
-          comment:
-            '武器(sword, rock, stick, hummer, gun, spear)の生成ができる',
-          example: 'touch sword'
+          comment: '武器(sword, rock, stick, hummer, gun, spear)の生成ができる',
+          example: 'touch sword',
         },
       ],
       //ないほうが見通しがいいような気もする
