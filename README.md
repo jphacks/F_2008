@@ -1,6 +1,6 @@
 # terminal-rpg-2
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
+![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/61449596/98368730-25ab9480-207b-11eb-9010-fbeb7486146c.png)
 
 <h1>製品概要</h1>
     <p>やってみると簡単だけど取っつきが難しそうなUNIXコマンドをゲーム感覚で知ってもらうプログラミング初学者に向けたwebアプリケーションです。</p>
