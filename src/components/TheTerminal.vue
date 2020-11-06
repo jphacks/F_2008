@@ -1,5 +1,6 @@
 <template>
-  <div class="terminal">
+  <button @click="goResultPage">go result</button>
+  <div class="terminal">    
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
       <template
@@ -75,6 +76,9 @@ export default {
     }
   },
   methods: {
+    goResultPage() {
+      this.$router.push({name: "Result", query: {  usedCommandsArray: this.usedCommandsArray}})
+    },    
     updateLines(newLine) {
       //TODO これの追加先が配列outputLinesからLogObjectの末尾の配列に変わればok
       //端末の出力を書き換えたい時はこれを使う実行する

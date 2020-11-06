@@ -1,9 +1,11 @@
 <template>
-
+  <h1 class="sample">
+    {{ usedCommands }}
+  </h1>
   <div class="Result">
     <TheResult />
   </div>
-
+   
 </template>
 
 <script>
@@ -18,7 +20,13 @@ export default {
       usedCommands: [],
     }
   },
+  created() {    
+    this.usedCommands = this.$route.query.usedCommandsArray
+  }  
 }
 </script>
 <style>
+.sample{
+  color: red;
+}
 </style>
