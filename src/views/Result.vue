@@ -1,12 +1,12 @@
 <template>
-  <h1>Result</h1>
+<div class="Result">
   <TheResult />
+</div>
 </template>
 
 <script>
 import TheResult from '../components/TheResult.vue'
 export default {
-  name: 'Result',
   components: {
     TheResult,
   },
@@ -18,4 +18,10 @@ export default {
   },
 }
 </script>
-<style></style>
+<style>
+.Result {
+  width: 100%;
+  min-height: 100vh;
+  background: #181a1b;
+}
+</style>
