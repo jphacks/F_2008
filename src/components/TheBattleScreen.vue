@@ -70,7 +70,7 @@
           enemyImage: true,
           shivering: isEnemyShiverActivated,
         }"
-        src="../assets/B-Ghost.png"
+        src="../assets/boss.png"
         alt="Ghost Image"
       />
     </div>
