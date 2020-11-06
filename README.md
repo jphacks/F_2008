@@ -1,4 +1,4 @@
-# terminal-rpg-2
+# Terminal-RPG
 
 ![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/61449596/98368730-25ab9480-207b-11eb-9010-fbeb7486146c.png)
 
