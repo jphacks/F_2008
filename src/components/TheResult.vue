@@ -1,44 +1,46 @@
 <template>
+<div class="resultBackground">
   <div v-show="isWin" class="TheResult">
-    <div class="resultTitle">
+    <div class="resultTop">
+    <span class="resultTopMessage">
     <h1>Conguratulations!!</h1>
     <h1>You Win!</h1>
+    </span>
     <br>
+    <p>おめでとうございます！<br>このゲームのコマンドはMacOSやLinuxOSを操作する<br>「ターミナル」のコマンドに基づいています</p>
+    <p>このゲームで使ったコマンドは、きっと実際のターミナルでも<br>使うことができるでしょう。</p>
     </div>
     <div class="resultText">
-    <p>おめでとうございます！<br>このゲームのコマンドはMacOSやLinuxOSを操作する「ターミナル」のコマンドに基づいています</p>
-    <p>
-      このゲームで使ったコマンドは、きっと実際のターミナルでも使うことができるでしょう。
-    </p>
     <br>
     </div>
     <p>あなたはこのゲームを通して、以下のターミナル、Linuxコマンドが使えるようになりました!</p>
-    <p>------------------------------------------</p>
     <div v-for="resultCommand in resultCommands" v-bind:key="resultCommand">
-      <p>{{ resultCommand }}: {{ resultDescription[resultCommand] }}</p>
       <p>------------------------------------------</p>
+      <p>{{ resultCommand }}: {{ resultDescription[resultCommand] }}</p>
     </div> 
   </div>
   <div v-show="!isWin" class="TheResult">
-    <div class="resultTitle">
+    <div class="resultTop">
+    <span class="resultTopMessage">
     <h1>You Lose!</h1>
+    </span>
     <br>
     <p>残念ながらあなたは負けてしまいました。</p>
     <p>気が向いたら、次のコマンドを使って<br>再チャレンジしてくださいね！</p>
     </div>
     <div class="resultText">
     <br>
-    <p>--------------------------</p>
     <div v-for="defeatDescription in defeatDescriptions" v-bind:key="defeatDescription">
+    <p>--------------------------</p>
       <p>
         コマンド: {{ defeatDescription.name }}<br />
         {{ defeatDescription.comment }}<br />
         例: {{ defeatDescription.example }}<br />
-        --------------------------
       </p>
     </div>
     </div>
   </div>
+</div>
 </template>
 <script>
 export default {
@@ -90,17 +92,26 @@ export default {
 }
 </script>
 <style>
-.resultTitle {
+.resultBackground {
+  padding-top:40px;
+  width: 100%;
+  min-height: 100vh;
+  background: #181a1b;
+}
+.resultTop {
   text-align: center;
+}
+.resultTopMessage {
+  font-size:20px;
 }
 .resultText {
   text-align: left;
 }
 .TheResult {
-  max-width: 400px;
+  max-width: 600px;
   height: auto;
   margin: auto;
-  padding: 8px;
+  padding: 35px;
   background: black;
   border: 2px solid white;
   border-radius: 4px;
@@ -108,22 +119,6 @@ export default {
 }
 
 .TheResult > * {
-  color: white;
-}
-
-.TheDefeat {
-  max-width: 400px;
-  height: auto;
-  margin: auto;
-  padding: 4px;
-  background: black;
-  border: 2px solid white;
-  border-radius: 4px;
-  text-align: left;
-  overflow: auto;
-}
-
-.TheDefeat > * {
   color: white;
 }
 </style>
