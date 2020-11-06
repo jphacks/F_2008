@@ -1,58 +1,70 @@
 <template>
-<div class="resultBackground">
-  <div v-show="isWin" class="TheResult">
-    <div class="resultTop">
-    <span class="resultTopMessage">
-    <h1>Conguratulations!!</h1>
-    <h1>You Win!</h1>
-    </span>
-    <br>
-    <p>おめでとうございます！<br>このゲームのコマンドはMacOSやLinuxOSを操作する<br>「ターミナル」のコマンドに基づいています</p>
-    <p>このゲームで使ったコマンドは、きっと実際のターミナルでも<br>使うことができるでしょう。</p>
-    </div>
-    <div class="resultText">
-    <br>
-    </div>
-    <p>あなたはこのゲームを通して、以下のターミナル、Linuxコマンドが使えるようになりました!</p>
-    <div v-for="usedCommand in usedCommands" v-bind:key="usedCommand">
-      <p>------------------------------------------</p>
-      <p>{{ usedCommand }}: {{ resultDescription[usedCommand] }}</p>
-    </div> 
-  </div>
-  <div v-show="!isWin" class="TheResult">
-    <div class="resultTop">
-    <span class="resultTopMessage">
-    <h1>You Lose!</h1>
-    </span>
-    <br>
-    <p>残念ながらあなたは負けてしまいました。</p>
-    <p>気が向いたら、次のコマンドを使って<br>再チャレンジしてくださいね！</p>
-    </div>
-    <div class="resultText">
-    <br>
-    <div v-for="defeatDescription in defeatDescriptions" v-bind:key="defeatDescription">
-      <div v-show="unUsedCommands.includes(defeatDescription.name)">
-    <p>--------------------------</p>
+  <div class="resultBackground">
+    <div v-show="isWin" class="TheResult">
+      <div class="resultTop">
+        <span class="resultTopMessage">
+          <h1>Conguratulations!!</h1>
+          <h1>You Win!</h1>
+        </span>
+        <br />
+        <p>
+          おめでとうございます！<br />このゲームのコマンドはMacOSやLinuxOSを操作する<br />「ターミナル」のコマンドに基づいています
+        </p>
+        <p>
+          このゲームで使ったコマンドは、きっと実際のターミナルでも<br />使うことができるでしょう。
+        </p>
+      </div>
+      <div class="resultText">
+        <br />
+      </div>
       <p>
-        コマンド: {{ defeatDescription.name }}<br />
-        {{ defeatDescription.comment }}<br />
-        例: {{ defeatDescription.example }}<br />
+        あなたはこのゲームを通して、以下のターミナル、Linuxコマンドが使えるようになりました!
       </p>
+      <div v-for="usedCommand in usedCommands" v-bind:key="usedCommand">
+        <p>------------------------------------------</p>
+        <p>{{ usedCommand }}: {{ resultDescription[usedCommand] }}</p>
       </div>
     </div>
+    <div v-show="!isWin" class="TheResult">
+      <div class="resultTop">
+        <span class="resultTopMessage">
+          <h1>You Lose!</h1>
+        </span>
+        <br />
+        <p>残念ながらあなたは負けてしまいました。</p>
+        <p>
+          気が向いたら、次のコマンドを使って<br />再チャレンジしてくださいね！
+        </p>
+      </div>
+      <div class="resultText">
+        <br />
+        <div
+          v-for="defeatDescription in defeatDescriptions"
+          v-bind:key="defeatDescription"
+        >
+          <div v-show="unUsedCommands.includes(defeatDescription.name)">
+            <p>--------------------------</p>
+            <p>
+              コマンド: {{ defeatDescription.name }}<br />
+              {{ defeatDescription.comment }}<br />
+              例: {{ defeatDescription.example }}<br />
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+    <router-link to="/">Homeに戻る</router-link>
   </div>
-</div>
 </template>
 <script>
 export default {
   name: 'TheResult',
   data() {
     return {
-      isWin:true,
-      allCommands:['cd', 'ls', 'source', 'rm', 'touch', 'mkdir'],
-      usedCommands: ['cd', 'ls', 'touch', 'rm', 'source'],
-      unUsedCommands: ['cd', 'ls', 'source', 'rm', 'touch', 'mkdir'],
+      isWin: true,
+      allCommands: ['cd', 'ls', 'source', 'rm', 'touch', 'mkdir'],
+      usedCommands: [],
+      unUsedCommands: [],
       resultDescription: {
         cd: '特定のフォルダに移動する',
         rm: '指定したフォルダやファイルを削除する',
@@ -64,7 +76,7 @@ export default {
       defeatDescriptions: [
         {
           name: 'cd',
-          comment: '自分が今いる位置から、指定した位置に移動します',
+          comment: '自分が今いる位置から、指定した位置に移動します 直接right,leftの移動はできません',
           example: 'cd left',
         },
         {
@@ -92,35 +104,40 @@ export default {
         },
         {
           name: 'touch',
-          comment: '指定した武器を生成する事ができます　生成できる武器はgun, spear, sword, rock, hummer, stickのいずれかで、すでに存在するものは生成できません',
-          example: 'touch gun'
+          comment:
+            '指定した武器を生成する事ができます　生成できる武器はgun, spear, sword, rock, hummer, stickのいずれかで、すでに存在するものは生成できません',
+          example: 'touch gun',
         },
       ],
     }
   },
-  created() {    
+  created() {
     this.usedCommands = this.$route.query.usedCommandsArray
+    this.isWin = this.$route.query.isWin
+    // this.usedCommands = ['cd', 'ls', 'touch']
+    // this.isWin = false
+    this.unUsedCommands = this.judgeUnusedCommands()
   },
   methods: {
-    judgeUnusedCommands: function() {
+    judgeUnusedCommands: function () {
       let unUsed = []
-      for  (let arg in this.allCommands) {
-        if (!this.usedCommands.includes(arg)){
-          this.unUsed.push(arg)
+      for (let command of this.allCommands) {
+        if (!this.usedCommands.includes(command)) {
+          unUsed.push(command)
+          console.log(command)
         }
       }
       return unUsed
     },
-  }
+  },
 }
-
 </script>
 <style>
-.sample{
+.sample {
   color: red;
 }
 .resultBackground {
-  padding-top:40px;
+  padding-top: 40px;
   width: 100%;
   min-height: 100vh;
   background: #181a1b;
@@ -129,7 +146,7 @@ export default {
   text-align: center;
 }
 .resultTopMessage {
-  font-size:20px;
+  font-size: 20px;
 }
 .resultText {
   text-align: left;
