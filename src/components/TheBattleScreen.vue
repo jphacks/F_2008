@@ -11,6 +11,15 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
+
+            <div v-for="weapon in weapons" :key="weapon">
+              <img
+                v-if="checkDirHasWeapon('~', weapon.name)"
+                :src="weapon.src"
+                :class="{ characterImage: true }"
+                alt="center weapons"
+              />
+            </div>
           </AppCharacterField>
         </div>
         <div class="first-class">
@@ -21,6 +30,14 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
+            <div v-for="weapon in weapons" :key="weapon">
+              <img
+                v-if="checkDirHasWeapon('left', weapon.name)"
+                :src="weapon.src"
+                :class="{ characterImage: true }"
+                alt="left weapons"
+              />
+            </div>
           </AppCharacterField>
           <!-- <AppSpacer :height="20" /> -->
           <AppCharacterField>
@@ -30,6 +47,14 @@
               src="../assets/hero.png"
               alt="Hero Image"
             />
+            <div v-for="weapon in weapons" :key="weapon">
+              <img
+                v-if="checkDirHasWeapon('right', weapon.name)"
+                :src="weapon.src"
+                :class="{ characterImage: true }"
+                alt="right weapons"
+              />
+            </div>
           </AppCharacterField>
         </div>
       </div>
@@ -74,7 +99,15 @@ export default {
   data() {
     return {
       isEnemyShiverActivated: false,
-      isMyShiverActivated: false
+      isMyShiverActivated: false,
+      weapons: [
+        { name: 'gun', src: require('@/assets/gun.png') },
+        { name: 'sword', src: require('@/assets/sword.png') },
+        { name: 'spear', src: require('@/assets/spear.png') },
+        { name: 'stick', src: require('@/assets/stick.png') },
+        { name: 'rock', src: require('@/assets/rock.png') },
+        { name: 'hunmmer', src: require('@/assets/hunmmer.png') },
+      ],
     }
   },
   computed: {
@@ -86,6 +119,15 @@ export default {
     },
     positionRight() {
       return this.currentDir === 'right'
+    },
+    //ディレクトリに武器があるかをチェックする
+    checkDirHasWeapon: function () {
+      return function (dir, weapon) {
+        if (weapon in this.$parent.armsPosition[dir]) {
+          return true
+        }
+        return false
+      }
     },
   },
   watch: {
