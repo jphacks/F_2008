@@ -53,6 +53,7 @@
         </div>
       </div>
     </div>
+    <router-link to="/">Homeに戻る</router-link>
   </div>
 </template>
 <script>
@@ -60,10 +61,10 @@ export default {
   name: 'TheResult',
   data() {
     return {
-      isWin: false,
+      isWin: true,
       allCommands: ['cd', 'ls', 'source', 'rm', 'touch', 'mkdir'],
       usedCommands: [],
-      unUsedCommands: ['cd', 'ls', 'source', 'rm', 'touch', 'mkdir'],
+      unUsedCommands: [],
       resultDescription: {
         cd: '特定のフォルダに移動する',
         rm: '指定したフォルダやファイルを削除する',
@@ -75,7 +76,7 @@ export default {
       defeatDescriptions: [
         {
           name: 'cd',
-          comment: '自分が今いる位置から、指定した位置に移動します',
+          comment: '自分が今いる位置から、指定した位置に移動します 直接right,leftの移動はできません',
           example: 'cd left',
         },
         {
@@ -112,13 +113,18 @@ export default {
   },
   created() {
     this.usedCommands = this.$route.query.usedCommandsArray
+    this.isWin = this.$route.query.isWin
+    // this.usedCommands = ['cd', 'ls', 'touch']
+    // this.isWin = false
+    this.unUsedCommands = this.judgeUnusedCommands()
   },
   methods: {
     judgeUnusedCommands: function () {
       let unUsed = []
-      for (let arg in this.allCommands) {
-        if (!this.usedCommands.includes(arg)) {
-          this.unUsed.push(arg)
+      for (let command of this.allCommands) {
+        if (!this.usedCommands.includes(command)) {
+          unUsed.push(command)
+          console.log(command)
         }
       }
       return unUsed
