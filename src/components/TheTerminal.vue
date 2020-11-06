@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       textInput: '',
+      usedCommandsArray: [], //ここに使ったコマンド群の文字列が格納されます
       outputObjects: [
         // {
         //   _inputCommand: 'inputだけだよ',
@@ -96,6 +97,14 @@ export default {
       console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
+    _pushUsedCommand(commandName) {
+      this.updateLines(this.usedCommandsArray)
+      if (this.usedCommandsArray.includes(commandName)) {
+        return
+      } else {
+        this.usedCommandsArray.push(commandName)
+      }
+    },
     _utilRandomRangeInt(minInt, maxInt) {
       //ゲームバランス調整用
       //minInt以上maxInt未満の整数を等確率で返す
@@ -130,18 +139,22 @@ export default {
       switch (commandKind) {
         case 'source':
           this.source(commandArg)
+          this._pushUsedCommand(commandKind)
           this.checkIfContinue()
           break
         case 'touch':
           this.touch(commandArg)
+          this._pushUsedCommand(commandKind)
           this.checkIfContinue()
           break
         case 'ls':
           this.ls()
+          this._pushUsedCommand(commandKind)
           this.checkIfContinue()
           break
         case 'cd':
           this.cd(commandArg)
+          this._pushUsedCommand(commandKind)
           this.checkIfContinue()
           break
         case 'rm':
@@ -191,6 +204,11 @@ export default {
         weaponName in this.$parent.armsPosition[this.$parent.currentDir]
       ) {
         this.updateLines(`武器${weaponName}は既に存在しています`)
+      } else if (
+        Object.keys(this.$parent.armsPosition[this.$parent.currentDir])
+          .length >= 4
+      ) {
+        this.updateLines(`武器は4つまでしか作れません`)
       } else {
         this.$parent.armsPosition[this.$parent.currentDir][
           weaponName
@@ -216,9 +234,9 @@ export default {
         if (this.$parent.currentDir === 'home') {
           return
         } else {
-        this.$parent.currentDir = this.$parent.parentDir[
-          this.$parent.currentDir
-        ]
+          this.$parent.currentDir = this.$parent.parentDir[
+            this.$parent.currentDir
+          ]
         }
       } else {
         //今いるディレクトリにつながっているディレクトリを全てチェックしている
@@ -247,7 +265,7 @@ export default {
       if (this.$parent.num <= 0) {
         this.$parent.num = 0
         this.updateLines('あなたの勝利です!')
-        //TODO勝利ページへ遷移
+        //TODO ここで勝利ページへ移行
       } else if (this.$parent.num > 0) {
         //ここにログ追加
         let newLogObject = {
@@ -308,6 +326,7 @@ export default {
       if (this.$parent.myHp <= 0) {
         this.$parent.myHp = 0
         this.updateLines('あなたの敗北です')
+        //TODO ここで敗北ページへ移行
       } else if (this.$parent.myHp > 0) {
         this.updateLines('あなたのターンです')
         this.$parent.isEnemyTurn = false
