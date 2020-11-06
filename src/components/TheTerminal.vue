@@ -2,9 +2,28 @@
   <div class="terminal">
     <!-- Note: ログを表示するコンテイナー -->
     <div class="outputs-container">
-      <p v-for="outputLine in outputLines" v-bind:key="outputLine">
-        {{ outputLine }}
-      </p>
+      <div v-for="outputObject in this.outputObjects" v-bind:key="outputObject">
+        <div v-if="outputObject._inputCommand">
+          <span
+            >Yusya@World :{{
+              $parent.currentPathForDisplay[outputObject._commandDir]
+            }}$
+          </span>
+          <span>{{ outputObject._inputCommand }}</span>
+        </div>
+
+        <div v-if="outputObject._hasOutputLines">
+          <div
+            v-for="_outputline in outputObject._outputlines"
+            v-bind:key="_outputline"
+          >
+            <span></span>
+            <span>{{ _outputline }}</span>
+          </div>
+        </div>
+
+        <p>-------------------------</p>
+      </div>
     </div>
     <!-- Note:  入力関係をまとめたコンテイナー -->
     <div class="input-container">
@@ -26,24 +45,49 @@ export default {
   data() {
     return {
       textInput: '',
-      outputLines: [],
+      outputObjects: [
+        {
+          _inputCommand: 'inputだけだよ',
+          _hasInputCommand: true,
+          _commandDir: '~',
+          _hasOutputLines: false,
+          _outputlines: [],
+        },
+        {
+          _inputCommand: '',
+          _hasInputCommand: false,
+          _commandDir: '~',
+          _hasOutputLines: true,
+          _outputlines: [
+            '一行だと見にくいログ（敵の攻撃によるログ）は',
+            'このように複数の行にまたがって',
+            '描画していくよ',
+          ],
+        },
+        {
+          _inputCommand: 'ls',
+          _hasInputCommand: true,
+          _commandDir: '~',
+          _hasOutputLines: true,
+          _outputlines: ['left right center sword stick konna kanji nisuru'],
+        },
+      ],
       outputLinesMaxLimit: 10,
     }
   },
   methods: {
     updateLines(newLine) {
+      //TODO これの追加先が配列outputLinesからLogObjectの末尾の配列に変わればok
       //端末の出力を書き換えたい時はこれを使う実行する
-      //今までのconsole.logをこれに変えれば画面内に表示できる
-      this.outputLines.push(newLine)
-      //this.outputLines.push(this.outputLines.length)
-      let overLinesNum = this.outputLines.length - this.outputLinesMaxLimit
-      for (let i = 0; i < overLinesNum; i++) {
-        this.outputLines.shift()
+      let lastLogObject = this.outputObjects[this.outputObjects.length - 1]
+      lastLogObject._outputlines.push(newLine)
+
+      let overLinesNumofLastLog =
+        lastLogObject.length - this.outputLinesMaxLimit
+      for (let i = 0; i < overLinesNumofLastLog; i++) {
+        lastLogObject._outputlines.shift()
       }
-      console.log(this.outputLines)
-      //if (this.outputLines.length == this.outputLinesMaxLimit) {
-      //  this.outputLines.shift()
-      //}
+      //上までで書き換わった
     },
     parseCommand(textInput) {
       // テキスト入力をスペースで区切って配列に変換する
@@ -59,10 +103,30 @@ export default {
       //minInt以上maxInt未満の整数を等確率で返す
       return Math.floor(Math.random() * (maxInt - minInt) + minInt)
     },
+    _arrayToOneLineString(Array) {
+      //一行の文字列にする
+      return Array.join(' ')
+    },
     runCommand() {
+      let newLogObject = {
+        _inputCommand: '',
+        _hasInputCommand: true,
+        _commandDir: this.$parent.currentDir, //コマンド実行時パスが欲しい
+        _hasOutputLines: true,
+        _outputlines: [],
+      }
+      this.outputObjects.push(newLogObject) //コマンド実行を起点にそのログを入れるオブジェクトを配列に確保
+      let lastLogObject = this.outputObjects[this.outputObjects.length - 1]
       var parsedCommandsArray = this.parseCommand(this.textInput)
+      lastLogObject._hasInputCommand = true //入力コマンドがあるので
+      lastLogObject._inputCommand = this._arrayToOneLineString(
+        parsedCommandsArray
+      ) //入力コマンドはここでログに格納
       console.log(parsedCommandsArray)
+<<<<<<< HEAD
       commandArg = this.updateLines(this.textInput)
+=======
+>>>>>>> db2741ca40c544e49ded1c1c4b21c4dc698cc6e0
       var commandKind = parsedCommandsArray[0]
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
@@ -95,6 +159,7 @@ export default {
           this.checkIfContinue()
           break
         case 'clear':
+          this.outputObjects = []
           this.outputLines = []
           break
         default:
@@ -164,7 +229,6 @@ export default {
           i < this.$parent.linkedDirs[this.$parent.currentDir].length;
           i++
         ) {
-          console.log(this.$parent.linkedDirs[this.$parent.currentDir][i])
           if (this.$parent.linkedDirs[this.$parent.currentDir][i] === strPath) {
             this.$parent.currentDir = strPath
             this.updateLines(`${this.$parent.currentDir}に移動しました`)
@@ -185,7 +249,18 @@ export default {
       if (this.$parent.num <= 0) {
         this.$parent.num = 0
         this.updateLines('あなたの勝利です!')
+        //TODO勝利ページへ遷移
       } else if (this.$parent.num > 0) {
+        //ここにログ追加
+        let newLogObject = {
+          _inputCommand: '',
+          _hasInputCommand: false,
+          _commandDir: '~',
+          _hasOutputLines: true,
+          _outputlines: [],
+        }
+        //ここから次の自分のコマンド実行までの敵のターン開始とそれに伴うログが追加されていく
+        this.outputObjects.push(newLogObject)
         this.updateLines('Bossのターンです')
         this.$parent.isEnemyTurn = true
         setTimeout(this.enemyTurn, 1000)
@@ -243,14 +318,7 @@ export default {
 
     ls() {
       let childDirsArray = this.$parent.nextDirs[this.$parent.currentDir]
-      for (let i = 0; i < childDirsArray.length; i++) {
-        this.updateLines(childDirsArray[i])
-      }
-      //let childArmsArray = this.$parent.armsPosition[this.$parent.currentDir]
-      //for (let i = 0; i < childArmsArray.length; i++) {
-      //  console.log(childArmsArray)
-      //  this.updateLines(childArmsArray[i])
-      //}
+      this.updateLines(this._arrayToOneLineString(childDirsArray))
       this.updateLines(this.$parent.armsPosition[this.$parent.currentDir])
       this.$parent.turnContinue = true
     },
