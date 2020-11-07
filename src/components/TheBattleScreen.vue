@@ -128,7 +128,7 @@ export default {
     },
     //ディレクトリに武器があるかをチェックする
     checkDirHasWeapon: function () {
-      return function (dir, weapon) {
+      return (dir, weapon) => {
         if (weapon in this.$parent.armsPosition[dir]) {
           return true
         }

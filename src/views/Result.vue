@@ -76,7 +76,8 @@ export default {
       defeatDescriptions: [
         {
           name: 'cd',
-          comment: '自分が今いる位置から、指定した位置に移動します 直接right,leftの移動はできません',
+          comment:
+            '自分が今いる位置から、指定した位置に移動します 直接right,leftの移動はできません',
           example: 'cd left',
         },
         {
