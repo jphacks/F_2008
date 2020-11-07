@@ -173,10 +173,10 @@ export default {
   }
 }
 .battle-screen {
-  max-width: 800px;
+  max-width: 700px;
   height: 400px;
   margin: auto;
-  background-image: url('../assets/backgroud_glass.png');
+  background-image: url('../assets/backgroud_glass_1.png');
   background-size: cover;
   position: relative;
   .character-fields-contaier {
@@ -187,7 +187,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     .root {
-      padding-right: 16px;
+      padding-right: 20px;
     }
     .characterImage {
       width: 50px;
