@@ -19,7 +19,10 @@
     left: -10px;
     .weapon-field {
       width: fit-content;
-      background: rgba(202, 198, 190, 0.8);
+      // background: rgba(202, 198, 190, 0.8);
+      background: #191970;
+      border: 1px solid rgb(202, 198, 190);
+      border-radius: 2px;
       img {
         width: 20px;
         height: 20px;

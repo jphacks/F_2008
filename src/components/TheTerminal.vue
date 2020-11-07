@@ -98,13 +98,13 @@ export default {
       // テキスト入力をスペースで区切って配列に変換する
       // 関数の引数とかにアクセスしやすいように
       // runCommandメソッド直下で実行
-      console.log('parseSTART:', textInput)
+      //console.log('parseSTART:', textInput)
       var parsedCommandsArray = textInput.split(/[\s]+/)
-      console.log('parseEND:', textInput)
+      //console.log('parseEND:', textInput)
       return parsedCommandsArray
     },
     _pushUsedCommand(commandName) {
-      this.updateLines(this.usedCommandsArray)
+      //this.updateLines(this.usedCommandsArray)
       if (this.usedCommandsArray.includes(commandName)) {
         return
       } else {
@@ -135,12 +135,12 @@ export default {
       lastLogObject._inputCommand = this._arrayToOneLineString(
         parsedCommandsArray
       ) //入力コマンドはここでログに格納
-      console.log(parsedCommandsArray)
+      //console.log(parsedCommandsArray)
       var commandKind = parsedCommandsArray[0]
       if (parsedCommandsArray.length >= 2) {
         var commandArg = parsedCommandsArray[1]
       }
-      console.log(commandKind)
+      //console.log(commandKind)
       this.textInput = ''
       switch (commandKind) {
         case 'source':
@@ -177,7 +177,7 @@ export default {
           break
         default:
           this.updateLines(`command ${this.textInput} not found`)
-          console.log(`command ${this.textInput} not found`)
+        //console.log(`command ${this.textInput} not found`)
       }
     },
     source(commandArg) {
@@ -193,7 +193,7 @@ export default {
           this.updateLines(
             '現在のファイルには指定した武器ファイルが存在しません'
           )
-          console.log('現在のファイルには指定した武器ファイルが存在しません')
+          //console.log('現在のファイルには指定した武器ファイルが存在しません')
         }
       } else if (this.$parent.isEnemyTurn === true) {
         console.log('your turn has not come yet')
