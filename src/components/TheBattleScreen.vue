@@ -112,7 +112,7 @@ export default {
         { name: 'spear', src: require('@/assets/spear.png') },
         { name: 'stick', src: require('@/assets/stick.png') },
         { name: 'rock', src: require('@/assets/rock.png') },
-        { name: 'hunmmer', src: require('@/assets/hunmmer.png') },
+        { name: 'hummer', src: require('@/assets/hunmmer.png') },
       ],
     }
   },
