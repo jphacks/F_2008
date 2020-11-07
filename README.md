@@ -6,6 +6,9 @@
     <p>覚えてみると簡単だけど最初はとっつきにくいUNIXコマンドをゲーム感覚で知ってもらう、プログラミング初学者に向けたwebアプリケーションです。</p>
 <a href="https://github.com/jphacks/F_2008">
   <button type="button">Terminal-RPG(github)</button>
+</a></br>
+<a href="https://terminalrpg.web.app/">
+  <button type="button">Terminal-RPG(ゲーム)</button>
 </a>
 
 <h2>背景(製品開発のきっかけ、課題等）</h2>
@@ -33,7 +36,7 @@
 <h2>製品説明（具体的な製品の説明）</h2>
     <p>プログラマが日常的に使うUNIXコマンド、これと親しみやすいRPGゲームを融合させた、全く新しいコンセプトの教育コンテンツです</p>
     <p>Terminal-RPGで使うコマンドは実際のUNIXコマンドの機能に近づけており、まずはTerminal-RPGを通してコマンドの機能を直観的に理解してもらうことで、実際の端末でコマンドを扱う際にコマンドの理解を早めることができます。</p>
-    <img src='https://user-images.githubusercontent.com/61449596/98381182-e5551200-208c-11eb-9b07-bf518e39715a.png'>
+    <img src='https://github.com/jphacks/F_2008/blob/master/preview.png'>
 
 <h2>特長</h2>
 <ul>
@@ -44,7 +47,7 @@
 </ul>
 
 <h2>解決出来ること</h2>
-  <p>CUIがわからなくってプログラミングのモチベーションがさがってプログラミングを諦めてしまう...なんてことを防ぐことができる</p>
+  <p>CUIがわからなくってプログラミングのモチベーションがさがって環境構築とプログラミング習得を諦めてしまう...なんてことを防ぐことができる</p>
 
 <h2>今後の展望</h2>
   <p>sshやscp,viなどのコマンドの種類を増やす</p>
