@@ -33,7 +33,7 @@
 <h2>製品説明（具体的な製品の説明）</h2>
     <p>プログラマが日常的に使うUNIXコマンド、これと親しみやすいRPGゲームを融合させた、全く新しいコンセプトの教育コンテンツです</p>
     <p>Terminal-RPGで使うコマンドは実際のUNIXコマンドの機能に近づけており、まずはTerminal-RPGを通してコマンドの機能を直観的に理解してもらうことで、実際の端末でコマンドを扱う際にコマンドの理解を早めることができます。</p>
-    <img src='https://user-images.githubusercontent.com/61449596/98381182-e5551200-208c-11eb-9b07-bf518e39715a.png'>
+    <img src='https://github.com/jphacks/F_2008/blob/master/preview.png'>
 
 <h2>特長</h2>
 <ul>
