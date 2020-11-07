@@ -6,7 +6,7 @@
     <p>覚えてみると簡単だけど最初はとっつきにくいUNIXコマンドをゲーム感覚で知ってもらう、プログラミング初学者に向けたwebアプリケーションです。</p>
 <a href="https://github.com/jphacks/F_2008">
   <button type="button">Terminal-RPG(github)</button>
-</a>
+</a></br>
 <a href="https://terminalrpg.web.app/">
   <button type="button">Terminal-RPG(ゲーム)</button>
 </a>
