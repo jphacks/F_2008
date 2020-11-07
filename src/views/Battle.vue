@@ -1,5 +1,6 @@
 <template>
   <div class="battle">
+    <AppSpacer :height="40" />
     <!-- Note: GUI バトル画面 -->
     <div class="leftScreen">
       <TheBattleScreen
