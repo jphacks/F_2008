@@ -12,7 +12,6 @@
           </span>
           <span>{{ outputObject._inputCommand }}</span>
         </div>
-
         <template v-if="outputObject._hasOutputLines">
           <p
             v-for="_outputline in outputObject._outputlines"
@@ -196,10 +195,10 @@ export default {
           //console.log('現在のファイルには指定した武器ファイルが存在しません')
         }
       } else if (this.$parent.isEnemyTurn === true) {
-        console.log('your turn has not come yet')
+        //console.log('your turn has not come yet')
       } else {
-        console.log('isEnemyTurn typeerror')
-        console.log(this.$parent.isEnemyTurn)
+        //console.log('isEnemyTurn typeerror')
+        //console.log(this.$parent.isEnemyTurn)
       }
       this.$parent.turnContinue = false
     },
@@ -295,7 +294,7 @@ export default {
         this.$parent.isEnemyTurn = true
         setTimeout(this.enemyTurn, 1000)
       } else {
-        console.log('changeTurnToEnemyがエラーを吐いています')
+        //console.log('changeTurnToEnemyがエラーを吐いています')
       }
     },
     //敵のターンにする処理はこの中に入れる
