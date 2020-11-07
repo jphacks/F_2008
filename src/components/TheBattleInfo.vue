@@ -2,7 +2,7 @@
   <div class="battle-info">
     <!-- Todo: ヒーローの HP を表示する -->
     <div class="hp-container">
-      <h1 class="label">Prayer HP:</h1>
+      <h1 class="label">Player HP:</h1>
       <div class="hp-gauge">
         <AppSpacer :height="4" />
         <span class="hp__bar">
